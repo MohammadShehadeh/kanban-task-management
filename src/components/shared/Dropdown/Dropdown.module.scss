@@ -17,7 +17,7 @@
 
 .content {
     display: grid;
-    width: 140px;
+    min-width: 140px;
     justify-content: start;
     text-align: left;
     gap: var(--sm-spacing);
