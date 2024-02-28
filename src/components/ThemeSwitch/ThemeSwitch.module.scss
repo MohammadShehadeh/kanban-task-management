@@ -1,0 +1,10 @@
+.themeSwitch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--md-spacing);
+    padding: var(--sm-spacing) var(--md-spacing);
+    border-radius: var(--lg-spacing);
+    background-color: var(--_theme-switch-bg);
+    margin-inline: var(--md-spacing);
+}

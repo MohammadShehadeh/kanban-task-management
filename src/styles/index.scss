@@ -1,0 +1,87 @@
+:root {
+  --dark-charcoal: rgb(44, 44, 44);
+  --grayish-blue: #828fa3;
+  --crimson-blaze: rgb(209, 62, 62);
+  --ethereal-lavender: rgba(100, 96, 199, 0.1);
+  --pure-black: rgb(0, 0, 0);
+  --pure-white: rgb(255, 255, 255);
+  --enigmatic-purple: rgb(100, 96, 199);
+  --bluish-gray: rgb(130, 143, 163);
+  --burnt-orange: #dd9951;
+
+  --_card-bg-color: rgb(43, 44, 54);
+  --_card-headline-color: rgb(255, 255, 255);
+  --_badge-color: rgb(105 109 115);
+  --_dropdown-ellipsis-bg: #20212c;
+  --_theme-switch-bg: #20212c;
+  --_logo-color: var(--pure-white);
+
+  --xsm-spacing: 4px;
+  --sm-spacing: 8px;
+  --md-spacing: 16px;
+  --lg-spacing: 24px;
+  --xlg-spacing: 32px;
+
+  color-scheme: dark;
+}
+
+[data-color-scheme="light"] {
+  --_card-bg-color: rgb(255, 255, 255);
+  --_card-headline-color: rgb(0, 0, 0);
+  --_badge-color: rgb(129, 142, 162);
+  --_dropdown-ellipsis-bg: #e4ebfa;
+  --_theme-switch-bg: #f4f7fd;
+  --_logo-color: var(--pure-black);
+
+  color-scheme: light;
+}
+
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  font-family: var(--font-plus-jakarta-sans);
+}
+
+html,
+body,
+main {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: none;
+  border: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--burnt-orange);
+  }
+}
+
+a {
+  &:focus-visible {
+    outline: 2px solid var(--burnt-orange);
+  }
+}
+
+svg {
+  color: var(--bluish-gray);
+  fill: currentColor;
+
+  path {
+    fill: currentColor;
+  }
+}

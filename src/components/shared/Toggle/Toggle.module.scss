@@ -1,0 +1,31 @@
+.toggle {
+  background-color: var(--enigmatic-purple);
+  border-radius: var(--md-spacing);
+  cursor: pointer;
+  height: 24px;
+  position: relative;
+  width: 48px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.switch {
+  --_size: 18px;
+
+  background-color: var(--pure-white);
+  border-radius: 50%;
+  display: block;
+  height: var(--_size);
+  position: absolute;
+  top: 50%;
+  left: var(--xsm-spacing);
+  transition: 0.3s;
+  translate: 0 -50%;
+  width: var(--_size);
+}
+
+.active .switch {
+  left: calc(100% - (var(--_size) + var(--xsm-spacing)));
+}

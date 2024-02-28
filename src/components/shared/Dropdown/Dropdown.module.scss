@@ -1,0 +1,43 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.settings {
+  padding: var(--xsm-spacing);
+  border-radius: var(--sm-spacing);
+  cursor: pointer;
+  min-width: 22px;
+  height: 38px;
+
+  &:hover {
+    background-color: var(--_dropdown-ellipsis-bg, #20212c);
+  }
+}
+
+.content {
+    display: grid;
+    width: 140px;
+    justify-content: start;
+    text-align: left;
+    gap: var(--sm-spacing);
+    position: absolute;
+    top: 100%;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.middle {
+  left: 50%;
+  translate: -50% 0;
+}
+
+.button {
+    text-align: left;
+}
