@@ -1,0 +1,53 @@
+/**
+ * Based on Glenn McComb (@lenymo) - Useful Sass (SCSS) media query mixins for Bootstrap
+ * https://glennmccomb.com/articles/useful-sass-scss-media-query-mixins-for-bootstrap/
+ *
+ * Mobile-first breakpoint mixin. This is the preferred way to use a
+ * breakpoint, with larger devices inheriting from smaller ones.
+ */
+
+$breakpoints: (
+	sm: 480px,
+	md: 768px,
+	lg: 1024px,
+	xl: 1200px,
+	xxl: 1400px,
+);
+
+// Respond above.
+@mixin respond-above($breakpoint) {
+	// If the breakpoint exists in the map.
+	@if map-has-key($breakpoints, $breakpoint) {
+		// Get the breakpoint value.
+		$breakpoint-value: map-get($breakpoints, $breakpoint);
+
+		// Write the media query.
+		@media (min-width: $breakpoint-value) {
+			@content;
+		}
+
+		// If the breakpoint doesn't exist in the map.
+	} @else {
+		// Log a warning.
+		@warn 'Invalid breakpoint: #{$breakpoint}.';
+	}
+}
+
+// Respond below.
+@mixin respond-below($breakpoint) {
+	// If the breakpoint exists in the map.
+	@if map-has-key($breakpoints, $breakpoint) {
+		// Get the breakpoint value.
+		$breakpoint-value: map-get($breakpoints, $breakpoint);
+
+		// Write the media query.
+		@media (max-width: ($breakpoint-value - 1)) {
+			@content;
+		}
+
+		// If the breakpoint doesn't exist in the map.
+	} @else {
+		// Log a warning.
+		@warn 'Invalid breakpoint: #{$breakpoint}.';
+	}
+}

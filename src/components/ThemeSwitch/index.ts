@@ -1,1 +1,1 @@
-export { ThemeSwitch } from "./ThemeSwitch";
+export { ThemeSwitch } from './ThemeSwitch';

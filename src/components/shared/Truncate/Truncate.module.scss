@@ -1,0 +1,9 @@
+.truncate {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--line-clamp);
+	display: -webkit-box;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: normal;
+}

@@ -1,59 +1,59 @@
 $colors: (
-  1: tomato,
-  2: mediumseagreen,
-  3: orange,
-  4: dodgerblue,
-  5: orchid,
-  6: darkturquoise,
-  7: palevioletred,
-  8: limegreen,
-  9: coral,
-  10: slateblue,
-  11: indianred,
-  12: gray,
-  13: olivedrab,
-  14: gold,
-  15: peru,
-  16: royalblue,
-  17: sandybrown,
-  18: lightseagreen,
-  19: blueviolet,
-  20: tomato,
-  21: goldenrod,
-  22: limegreen,
+	1: tomato,
+	2: mediumseagreen,
+	3: orange,
+	4: dodgerblue,
+	5: orchid,
+	6: darkturquoise,
+	7: palevioletred,
+	8: limegreen,
+	9: coral,
+	10: slateblue,
+	11: indianred,
+	12: gray,
+	13: olivedrab,
+	14: gold,
+	15: peru,
+	16: royalblue,
+	17: sandybrown,
+	18: lightseagreen,
+	19: blueviolet,
+	20: tomato,
+	21: goldenrod,
+	22: limegreen,
 );
 
 .badge {
-  color: var(--_badge-color, rgb(105 109 115));
-  cursor: help;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2.5px;
-  max-width: 240px;
-  overflow: hidden;
-  position: relative;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
+	color: var(--_badge-color, rgb(105 109 115));
+	cursor: help;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 2.5px;
+	max-width: 240px;
+	overflow: hidden;
+	position: relative;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+	white-space: nowrap;
 
-  &[data-color-num] {
-    padding-left: calc(var(--md-spacing) + var(--sm-spacing));
+	&[data-color-num] {
+		padding-left: calc(var(--md-spacing) + var(--sm-spacing));
 
-    &::before {
-      content: "";
-      height: calc(var(--sm-spacing) + var(--xsm-spacing));
-      left: 0;
-      top: 50%;
-      translate: 0 -50%;
-      position: absolute;
-      width: calc(var(--sm-spacing) + var(--xsm-spacing));
-      border-radius: 50%;
-    }
-  }
+		&::before {
+			content: '';
+			height: calc(var(--sm-spacing) + var(--xsm-spacing));
+			left: 0;
+			top: 50%;
+			translate: 0 -50%;
+			position: absolute;
+			width: calc(var(--sm-spacing) + var(--xsm-spacing));
+			border-radius: 50%;
+		}
+	}
 
-  @for $i from 1 through 27 {
-    &[data-color-num="#{$i}"]::before {
-      background-color: map-get($colors, $i);
-    }
-  }
+	@for $i from 1 through 27 {
+		&[data-color-num='#{$i}']::before {
+			background-color: map-get($colors, $i);
+		}
+	}
 }

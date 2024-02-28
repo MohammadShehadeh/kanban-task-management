@@ -1,54 +1,96 @@
 .button {
-  align-items: center;
-  cursor: pointer;
-  display: inline-flex;
-  gap: var(--sm-spacing);
+	align-items: center;
+	cursor: pointer;
+	display: inline-flex;
+	gap: calc(var(--sm-spacing) + var(--xsm-spacing));
 
-  &:hover {
-    opacity: 0.8;
-  }
+	&:hover {
+		opacity: 0.8;
+	}
+
+	svg {
+		flex-shrink: 0;
+	}
 }
 
 .normal {
-  font-weight: 400;
-  font-size: 14px;
+	font-size: 14px;
 
-  &.primary {
-    color: var(--enigmatic-purple);
-  }
+	&.primary {
+		color: var(--enigmatic-purple);
+	}
 
-  &.secondary {
-    color: var(--grayish-blue);
-  }
+	&.secondary {
+		color: var(--grayish-blue);
+	}
 
-  &.danger {
-    color: var(--crimson-blaze);
-  }
+	&.danger {
+		color: var(--crimson-blaze);
+	}
 
-  &.lg {
-    font-size: 16px;
-    font-weight: 500;
-  }
+	&.tertiary {
+		color: var(--_badge-color);
+	}
+
+	&.white {
+		color: var(--pure-white);
+	}
+
+	&.sm {
+		font-size: 14px;
+	}
+
+	&.lg {
+		font-size: 16px;
+	}
 }
 
 .contained {
-  border-radius: var(--lg-spacing);
-  font-size: 16px;
-  font-weight: 500;
-  padding: var(--sm-spacing) var(--md-spacing);
+	border-radius: var(--lg-spacing);
+	font-size: 16px;
+	padding: calc(var(--sm-spacing) + var(--xsm-spacing)) var(--md-spacing);
 
-  &.primary {
-    background-color: var(--enigmatic-purple);
-    color: var(--pure-white);
-  }
+	&.primary {
+		background-color: var(--enigmatic-purple);
+		color: var(--pure-white);
+	}
 
-  &.secondary {
-    background-color: var(--ethereal-lavender);
-    color: var(--enigmatic-purple);
-  }
+	&.secondary {
+		background-color: var(--ethereal-lavender);
+		color: var(--enigmatic-purple);
+	}
 
-  &.danger {
-    background-color: var(--crimson-blaze);
-    color: var(--pure-white);
-  }
+	&.danger {
+		background-color: var(--crimson-blaze);
+		color: var(--pure-white);
+	}
+
+	&.white {
+		background-color: var(--pure-white);
+		color: var(--enigmatic-purple);
+	}
+
+	&.sm {
+		font-size: 14px;
+	}
+}
+
+.normal {
+	font-weight: 400;
+}
+
+.medium {
+	font-weight: 500;
+}
+
+.semiBold {
+	font-weight: 600;
+}
+
+.bold {
+	font-weight: 900;
+}
+
+.center {
+	justify-content: center;
 }

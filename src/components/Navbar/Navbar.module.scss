@@ -1,0 +1,43 @@
+@import '@/styles/breakpoints';
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--md-spacing);
+	flex-grow: 1;
+	padding: var(--lg-spacing) var(--lg-spacing);
+
+	@include respond-below('md') {
+		padding-inline: var(--md-spacing);
+	}
+}
+
+.settings {
+	display: flex;
+	gap: var(--sm-spacing);
+	align-items: center;
+}
+
+.settingsText {
+	@include respond-below('md') {
+		display: none;
+	}
+}
+
+.desktop {
+	display: none;
+	text-align: left;
+
+	@include respond-above('md') {
+		display: block;
+	}
+}
+
+.mobile {
+	display: none;
+
+	@include respond-below('md') {
+		display: block;
+	}
+}

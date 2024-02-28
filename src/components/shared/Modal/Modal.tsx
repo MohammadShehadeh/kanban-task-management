@@ -1,17 +1,22 @@
-import React from "react";
+import React, { PropsWithChildren, useRef } from 'react';
 
-import { Card } from "@/components/shared/Card";
+import { Card } from '@/components/shared/Card';
 
-import styles from "./Modal.module.scss";
+import styles from './Modal.module.scss';
 
-export const Modal = () => {
-  return (
-    <div className={styles.modal}>
-      <div className={styles.backdrop}></div>
-      <div className={styles.content}>
-        <Card>test</Card>
-      </div>
-    </div>
-  );
+interface ModalProps extends PropsWithChildren {
+	onClose: (value?: boolean) => void;
+}
+
+export const Modal = ({ onClose, children }: ModalProps) => {
+	const modalRef = useRef(null);
+
+	return (
+		<div className={styles.modal} ref={modalRef}>
+			<div className={styles.backdrop} onClick={() => onClose()}></div>
+			<div className={styles.content}>
+				<Card>{children}</Card>
+			</div>
+		</div>
+	);
 };
-
