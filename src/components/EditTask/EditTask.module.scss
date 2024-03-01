@@ -1,0 +1,19 @@
+.title {
+	margin-bottom: var(--md-spacing);
+}
+
+.formGroup {
+	margin-bottom: var(--md-spacing);
+
+	button {
+		width: 100%;
+	}
+}
+
+.label {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--text-color);
+	margin-bottom: var(--sm-spacing);
+	display: block;
+}

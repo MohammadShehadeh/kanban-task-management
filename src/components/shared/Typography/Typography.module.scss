@@ -1,0 +1,27 @@
+.typography {
+	margin-bottom: var(--sm-spacing);
+}
+
+.normal {
+	color: var(--text-color);
+}
+
+.muted {
+	color: var(--_card-description-color);
+}
+
+.danger {
+	color: var(--crimson-blaze);
+}
+
+.sm {
+	font-size: 14px;
+}
+
+.md {
+	font-size: 16px;
+}
+
+.lg {
+	font-size: 18px;
+}

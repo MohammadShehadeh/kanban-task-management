@@ -1,9 +1,37 @@
 .column {
-	outline: 1px dashed rgba(130, 143, 163, 0.4);
-	outline-width: 2px;
 	border-radius: 6px;
-	width: 280px;
-	height: 100%;
 	display: inline-flex;
 	flex-direction: column;
+	gap: var(--md-spacing);
+	height: 100vh;
+	width: 280px;
+	margin: 0 var(--sm-spacing);
+
+	&:empty {
+		border: 2px dashed rgba(130, 143, 163, 0.4);
+		height: 100%;
+	}
+}
+
+.active {
+	position: relative;
+
+	&::after {
+		align-items: center;
+		background-color: var(--enigmatic-purple);
+		border-radius: var(--xsm-spacing);
+		content: attr(data-name);
+		display: flex;
+		font-size: 14px;
+		font-weight: bold;
+		top: calc(100% + var(--md-spacing));
+		width: 100%;
+		height: 95px;
+		justify-content: center;
+		position: absolute;
+	}
+
+	&:empty::after {
+		top: 0;
+	}
 }

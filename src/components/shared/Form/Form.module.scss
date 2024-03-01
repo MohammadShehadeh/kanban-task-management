@@ -1,0 +1,30 @@
+.title {
+	margin-bottom: var(--md-spacing);
+}
+
+.formGroup {
+	margin-bottom: var(--md-spacing);
+	display: flex;
+	gap: var(--sm-spacing);
+}
+
+.row {
+	margin-bottom: 0;
+}
+
+.label {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--text-color);
+	display: block;
+}
+
+.error {
+	font-size: 12px;
+	color: var(--crimson-blaze);
+}
+
+.column {
+	flex-direction: column;
+	gap: var(--sm-spacing);
+}

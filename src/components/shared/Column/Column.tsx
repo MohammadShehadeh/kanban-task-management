@@ -1,9 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import React, { HTMLAttributes, PropsWithChildren } from 'react';
+import cx from 'classnames';
 
 import styles from './Column.module.scss';
 
-interface ColumnProps extends PropsWithChildren {}
+interface ColumnProps extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {}
 
-export const Column = ({ children }: ColumnProps) => {
-	return <div className={styles.column}>{children}</div>;
+export const Column = ({ children, className, ...restProps }: ColumnProps) => {
+	return (
+		<div className={cx(styles.column, className)} {...restProps}>
+			{children}
+		</div>
+	);
 };

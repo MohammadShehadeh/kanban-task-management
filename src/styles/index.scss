@@ -1,14 +1,17 @@
 :root {
 	--dark-charcoal: rgb(44, 44, 44);
 	--grayish-blue: #828fa3;
-	--crimson-blaze: rgb(209, 62, 62);
+	--crimson-blaze: rgb(234, 85, 85);
 	--ethereal-lavender: rgba(100, 96, 199, 0.1);
 	--pure-black: rgb(0, 0, 0);
 	--pure-white: rgb(255, 255, 255);
 	--enigmatic-purple: rgb(100, 96, 199);
 	--bluish-gray: rgb(130, 143, 163);
 	--burnt-orange: #dd9951;
+	--button-secondary-bg: var(--pure-white);
+	--text-color: var(--pure-white);
 
+	--_input-border: rgba(130, 143, 163, 0.4);
 	--_card-bg-color: rgb(43, 44, 54);
 	--_card-headline-color: rgb(255, 255, 255);
 	--_badge-color: rgb(105 109 115);
@@ -16,17 +19,23 @@
 	--_theme-switch-bg: #20212c;
 	--_logo-color: var(--pure-white);
 	--_border-line-color: #3e3f4e;
+	--_button-color: var(--pure-white);
+	--_placeholder-color: rgb(138, 138, 138);
 
 	--xsm-spacing: 4px;
 	--sm-spacing: 8px;
 	--md-spacing: 16px;
 	--lg-spacing: 24px;
 	--xlg-spacing: 32px;
+	--header-height: 86px;
 
 	color-scheme: dark;
 }
 
 [data-color-scheme='light'] {
+	--button-secondary-bg: var(--ethereal-lavender);
+	--text-color: var(--grayish-blue);
+
 	--_card-bg-color: rgb(255, 255, 255);
 	--_card-headline-color: rgb(0, 0, 0);
 	--_badge-color: rgb(129, 142, 162);
@@ -34,6 +43,8 @@
 	--_theme-switch-bg: #f4f7fd;
 	--_logo-color: var(--pure-black);
 	--_border-line-color: #e4ebfa;
+	--_button-color: var(--pure-black);
+	--_placeholder-color: rgb(182, 182, 182);
 
 	color-scheme: light;
 }

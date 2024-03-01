@@ -6,7 +6,8 @@
 	align-items: center;
 	gap: var(--md-spacing);
 	flex-grow: 1;
-	padding: var(--lg-spacing) var(--lg-spacing);
+	padding: var(--md-spacing) var(--lg-spacing);
+	height: calc(var(--header-height) - 1px);
 
 	@include respond-below('md') {
 		padding-inline: var(--md-spacing);

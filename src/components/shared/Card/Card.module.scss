@@ -6,8 +6,7 @@
 	box-shadow: var(--_card-box-shadow);
 	background-color: var(--_card-bg-color, rgb(43, 44, 54));
 	padding-inline: var(--md-spacing);
-	display: grid;
-	gap: var(--md-spacing);
+	cursor: pointer;
 
 	&.sm {
 		padding-block: var(--sm-spacing);
@@ -19,6 +18,10 @@
 
 	&.lg {
 		padding-block: var(--lg-spacing);
+	}
+
+	&.noPadding {
+		padding: 0;
 	}
 
 	&:focus-visible {

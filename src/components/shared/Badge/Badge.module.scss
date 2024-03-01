@@ -29,12 +29,12 @@ $colors: (
 	font-size: 12px;
 	font-weight: bold;
 	letter-spacing: 2.5px;
-	max-width: 240px;
 	overflow: hidden;
 	position: relative;
 	text-overflow: ellipsis;
 	text-transform: uppercase;
 	white-space: nowrap;
+	flex-shrink: 0;
 
 	&[data-color-num] {
 		padding-left: calc(var(--md-spacing) + var(--sm-spacing));

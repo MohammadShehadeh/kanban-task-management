@@ -1,0 +1,35 @@
+@import '@/styles/breakpoints';
+
+.grid {
+	display: grid;
+	gap: var(--md-spacing);
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	margin-top: var(--lg-spacing);
+}
+
+.row {
+	margin-block: var(--md-spacing);
+}
+
+.col {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+@for $i from 1 through 12 {
+	.col-lg-#{$i} {
+		grid-column: span $i;
+	}
+
+	.col-md-#{$i} {
+		@include respond-below('md') {
+			grid-column: span $i;
+		}
+	}
+
+	.col-sm-#{$i} {
+		@include respond-below('sm') {
+			grid-column: span $i;
+		}
+	}
+}

@@ -14,9 +14,7 @@ export const Modal = ({ onClose, children }: ModalProps) => {
 	return (
 		<div className={styles.modal} ref={modalRef}>
 			<div className={styles.backdrop} onClick={() => onClose()}></div>
-			<div className={styles.content}>
-				<Card>{children}</Card>
-			</div>
+			<Card className={styles.content}>{children}</Card>
 		</div>
 	);
 };

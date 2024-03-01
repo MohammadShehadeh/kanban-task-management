@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React, { PropsWithChildren } from 'react';
 
 import styles from './Layout.module.scss';
@@ -9,10 +8,14 @@ export const Layout = ({ children }: LayoutProps) => {
 	return <main className={styles.layout}>{children}</main>;
 };
 
-Layout.Header = ({ children }: LayoutProps) => {
+const Header = ({ children }: LayoutProps) => {
 	return <nav className={styles.header}>{children}</nav>;
 };
 
-Layout.Main = ({ children }: LayoutProps) => {
+Layout.Header = Header;
+
+const Main = ({ children }: LayoutProps) => {
 	return <div className={styles.main}>{children}</div>;
 };
+
+Layout.Main = Main;

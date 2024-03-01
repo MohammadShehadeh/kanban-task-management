@@ -1,0 +1,32 @@
+.input {
+	border-radius: var(--xsm-spacing);
+	border: 1px solid var(--_input-border);
+	min-height: 38px;
+	padding-inline: var(--md-spacing);
+	width: 100%;
+	color: var(--text-color);
+
+	&:focus-visible {
+		outline: 2px solid var(--enigmatic-purple);
+	}
+
+	&::-moz-placeholder {
+		color: var(--_placeholder-color);
+	}
+
+	&::-webkit-input-placeholder {
+		color: var(--_placeholder-color);
+	}
+
+	&::placeholder {
+		color: var(--_placeholder-color);
+	}
+}
+
+.error {
+	border: 1px solid var(--crimson-blaze);
+
+	&:focus-visible {
+		outline: none;
+	}
+}

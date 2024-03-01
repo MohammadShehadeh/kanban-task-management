@@ -1,13 +1,16 @@
-import React, { HTMLAttributes, PropsWithChildren } from 'react';
+import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import cx from 'classnames';
 
 import styles from './Button.module.scss';
 
-export interface ButtonProps extends PropsWithChildren, HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+	extends PropsWithChildren,
+		ButtonHTMLAttributes<HTMLButtonElement> {
 	color?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'white';
 	size?: 'sm' | 'md' | 'lg';
 	weight?: 'normal' | 'medium' | 'semibold' | 'bold';
 	variant?: 'contained' | 'normal';
+	fullWidth?: boolean;
 	className?: string;
 	center?: boolean;
 	onClick?: () => void;
@@ -22,6 +25,7 @@ export const Button = ({
 	center,
 	className,
 	onClick,
+	fullWidth,
 	...restProps
 }: ButtonProps) => {
 	return (
@@ -35,6 +39,7 @@ export const Button = ({
 				className,
 				{
 					[styles.center]: center,
+					[styles.fullWidth]: fullWidth,
 				}
 			)}
 			onClick={onClick}

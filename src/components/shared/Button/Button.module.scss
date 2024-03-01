@@ -33,15 +33,19 @@
 	}
 
 	&.white {
-		color: var(--pure-white);
+		color: var(--_button-color);
 	}
 
 	&.sm {
 		font-size: 14px;
 	}
 
-	&.lg {
+	&.md {
 		font-size: 16px;
+	}
+
+	&.lg {
+		font-size: 24px;
 	}
 }
 
@@ -56,7 +60,7 @@
 	}
 
 	&.secondary {
-		background-color: var(--ethereal-lavender);
+		background-color: var(--button-secondary-bg);
 		color: var(--enigmatic-purple);
 	}
 
@@ -72,6 +76,7 @@
 
 	&.sm {
 		font-size: 14px;
+		padding: var(--sm-spacing) var(--md-spacing);
 	}
 }
 
@@ -93,4 +98,8 @@
 
 .center {
 	justify-content: center;
+}
+
+.fullWidth {
+	width: 100%;
 }

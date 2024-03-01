@@ -1,7 +1,6 @@
 'use client';
 
-/* eslint-disable react/display-name */
-import React, { JSXElementConstructor, PropsWithChildren, cloneElement, useRef } from 'react';
+import React, { PropsWithChildren, cloneElement, useRef } from 'react';
 import cx from 'classnames';
 
 import { SettingsIcon } from '@/components/shared/icons';
@@ -50,10 +49,9 @@ export const Dropdown = ({
 			{placeholderWithProp}
 			{isOpen && (
 				<Card
-					className={cx(styles.content, styles[position], {
-						[styles.noPadding]: disableGutter,
-					})}
+					className={cx(styles.content, styles[position])}
 					gutter="md"
+					disableGutter={disableGutter}
 				>
 					{children}
 				</Card>

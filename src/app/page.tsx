@@ -1,9 +1,10 @@
-import '@/styles/index.scss';
-
 import { Layout } from '@/components/Layout';
 import { Logo } from '@/components/Logo';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
+import { Board } from '@/components/Board';
+
+import '@/styles/index.scss';
 
 export default async function Home() {
 	return (
@@ -14,7 +15,7 @@ export default async function Home() {
 			</Layout.Header>
 			<Layout.Main>
 				<Sidebar />
-				<div>board</div>
+				<Board />
 			</Layout.Main>
 		</Layout>
 	);

@@ -5,26 +5,27 @@ import cx from 'classnames';
 
 import { Badge } from '@/components/shared/Badge';
 import { Button } from '@/components/shared/Button';
-import { BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
+import { AddIcon, BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 
-import styles from './Sidebar.module.scss';
-import { useToggle } from '@/hooks/useToggle';
 import { Truncate } from '../shared/Truncate';
+import { useSidebarStore } from '@/store/sidebarStore';
+
+import styles from './Sidebar.module.scss';
 
 interface SidebarProps {
 	isMobile?: boolean;
 }
 
 export const Sidebar = ({ isMobile }: SidebarProps) => {
-	const { isOpen, toggleIsOpen } = useToggle(true);
+	const { toggleIsOpen, isOpen } = useSidebarStore();
 
 	if (!isOpen && !isMobile) {
 		return (
 			<Button
 				className={cx(styles.button, styles.showButton)}
 				variant="normal"
-				size="lg"
+				size="md"
 				color="white"
 				weight="bold"
 				onClick={() => toggleIsOpen()}
@@ -49,7 +50,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 							key={index}
 							className={cx(styles.button, index === 0 ? styles.active : '')}
 							variant="normal"
-							size="lg"
+							size="md"
 							color="tertiary"
 							weight="bold"
 						>
@@ -57,6 +58,16 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 							<Truncate lines={1}>{item}</Truncate>
 						</Button>
 					))}
+					<Button
+						className={cx(styles.button)}
+						variant="normal"
+						size="md"
+						color="primary"
+						weight="bold"
+					>
+						<BoardIcon />
+						<Truncate lines={1}>+ Create New Board</Truncate>
+					</Button>
 				</div>
 				<div>
 					<ThemeSwitch />
@@ -64,7 +75,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 						<Button
 							className={cx(styles.button, styles.hideButton)}
 							variant="normal"
-							size="lg"
+							size="md"
 							color="tertiary"
 							weight="bold"
 							onClick={() => toggleIsOpen()}

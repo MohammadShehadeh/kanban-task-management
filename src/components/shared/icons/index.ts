@@ -6,3 +6,4 @@ export { DarkIcon } from './DarkIcon';
 export { LightIcon } from './LightIcon';
 export { SettingsIcon } from './SettingsIcon';
 export { ShowIcon } from './ShowIcon';
+export { RemoveIcon } from './RemoveIcon';
