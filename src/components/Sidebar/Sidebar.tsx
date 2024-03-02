@@ -5,11 +5,14 @@ import cx from 'classnames';
 
 import { Badge } from '@/components/shared/Badge';
 import { Button } from '@/components/shared/Button';
-import { AddIcon, BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
+import { BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 
 import { Truncate } from '../shared/Truncate';
 import { useSidebarStore } from '@/store/sidebarStore';
+
+import { BoardForm } from '../BoardForm';
+import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Sidebar.module.scss';
 
@@ -18,9 +21,10 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isMobile }: SidebarProps) => {
-	const { toggleIsOpen, isOpen } = useSidebarStore();
+	const { toggleSideBar, isSidebarOpen } = useSidebarStore();
+	const { openModal } = useModalStore();
 
-	if (!isOpen && !isMobile) {
+	if (!isSidebarOpen && !isMobile) {
 		return (
 			<Button
 				className={cx(styles.button, styles.showButton)}
@@ -28,7 +32,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 				size="md"
 				color="white"
 				weight="bold"
-				onClick={() => toggleIsOpen()}
+				onClick={() => toggleSideBar()}
 				aria-label="Show Sidebar"
 			>
 				<ShowIcon />
@@ -64,6 +68,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 						size="md"
 						color="primary"
 						weight="bold"
+						onClick={() => openModal(ADD_BOARD)}
 					>
 						<BoardIcon />
 						<Truncate lines={1}>+ Create New Board</Truncate>
@@ -78,7 +83,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 							size="md"
 							color="tertiary"
 							weight="bold"
-							onClick={() => toggleIsOpen()}
+							onClick={() => toggleSideBar()}
 						>
 							<HideIcon />
 							Hide Sidebar
@@ -86,6 +91,8 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 					)}
 				</div>
 			</div>
+
+			<BoardForm type={ADD_BOARD} />
 		</div>
 	);
 };

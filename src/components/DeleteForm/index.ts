@@ -1,0 +1,1 @@
+export { DeleteForm } from './DeleteForm';

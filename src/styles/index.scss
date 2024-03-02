@@ -16,11 +16,14 @@
 	--_card-headline-color: rgb(255, 255, 255);
 	--_badge-color: rgb(105 109 115);
 	--_dropdown-ellipsis-bg: #20212c;
+	--_dropdown-bg: #20212c;
 	--_theme-switch-bg: #20212c;
 	--_logo-color: var(--pure-white);
 	--_border-line-color: #3e3f4e;
 	--_button-color: var(--pure-white);
 	--_placeholder-color: rgb(138, 138, 138);
+
+	--input-bg: var(--_card-bg-color);
 
 	--xsm-spacing: 4px;
 	--sm-spacing: 8px;
@@ -45,6 +48,8 @@
 	--_border-line-color: #e4ebfa;
 	--_button-color: var(--pure-black);
 	--_placeholder-color: rgb(182, 182, 182);
+	--input-bg: rgb(255, 255, 255);
+	--_dropdown-bg: rgb(255, 255, 255);
 
 	color-scheme: light;
 }
@@ -96,4 +101,11 @@ svg {
 	path {
 		fill: currentColor;
 	}
+}
+
+input,
+select,
+textarea {
+	background-color: var(--input-bg);
+	font-size: 14px;
 }

@@ -11,9 +11,13 @@ import styles from './Board.module.scss';
 import { Card } from '../shared/Card';
 import { Button } from '../shared/Button';
 import { AddIcon } from '../shared/icons';
+import { BoardForm } from '../BoardForm';
+import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 export const Board = () => {
-	const { isOpen } = useSidebarStore();
+	const { isSidebarOpen } = useSidebarStore();
+	const { openModal } = useModalStore();
+
 	const [columns, setColumns] = useState([
 		{
 			id: 'TODO-1',
@@ -157,7 +161,7 @@ export const Board = () => {
 	};
 
 	return (
-		<div className={cx(styles.board, { [styles.isOpen]: !isOpen })}>
+		<div className={cx(styles.board, { [styles.isOpen]: !isSidebarOpen })}>
 			{columns.map((column, columnIndex) => (
 				<div className={styles.task} key={columnIndex}>
 					<Badge order={1} className={styles.sticky}>
@@ -185,15 +189,21 @@ export const Board = () => {
 				</div>
 			))}
 			<div className={styles.task}>
-				<Badge order={1} className={styles.sticky}>
-					&nbsp;
-				</Badge>
+				<Badge className={styles.sticky}>&nbsp;</Badge>
 				<Column className={styles.addNewCol}>
-					<Button variant="normal" size="lg" color="secondary" center>
+					<Button
+						variant="normal"
+						size="lg"
+						color="secondary"
+						center
+						onClick={() => openModal(ADD_BOARD)}
+					>
 						<AddIcon /> New Column
 					</Button>
 				</Column>
 			</div>
+
+			<BoardForm type={ADD_BOARD} />
 		</div>
 	);
 };

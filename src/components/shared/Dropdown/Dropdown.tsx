@@ -1,6 +1,13 @@
 'use client';
 
-import React, { PropsWithChildren, cloneElement, useRef } from 'react';
+import React, {
+	ButtonHTMLAttributes,
+	Children,
+	PropsWithChildren,
+	ReactElement,
+	cloneElement,
+	useRef,
+} from 'react';
 import cx from 'classnames';
 
 import { SettingsIcon } from '@/components/shared/icons';
@@ -11,18 +18,14 @@ import styles from './Dropdown.module.scss';
 
 interface DropdownProps extends PropsWithChildren {
 	position?: 'left' | 'right' | 'middle';
-	placeholder?: React.ReactElement;
+	placeholder?: ReactElement;
 	disableGutter?: boolean;
 	className?: string;
 }
 
-interface PlaceholderProps {
-	onClick?: () => void;
-}
-
-const Placeholder = ({ onClick }: PlaceholderProps) => {
+const DefaultPlaceholder = ({ ...restProps }: ButtonHTMLAttributes<HTMLButtonElement>) => {
 	return (
-		<button className={styles.settings} onClick={onClick}>
+		<button className={styles.settings} {...restProps}>
 			<SettingsIcon />
 		</button>
 	);
@@ -31,7 +34,7 @@ const Placeholder = ({ onClick }: PlaceholderProps) => {
 export const Dropdown = ({
 	children,
 	className,
-	placeholder = <Placeholder />,
+	placeholder = <DefaultPlaceholder />,
 	position = 'middle',
 	disableGutter,
 }: DropdownProps) => {
@@ -53,7 +56,15 @@ export const Dropdown = ({
 					gutter="md"
 					disableGutter={disableGutter}
 				>
-					{children}
+					{Children.map(Children.toArray(children) as ReactElement[], (child) => {
+						return cloneElement(child, {
+							onClick: () => {
+								// Extend click functionality
+								child.props?.onClick?.();
+								toggleIsOpen(false);
+							},
+						});
+					})}
 				</Card>
 			)}
 		</div>

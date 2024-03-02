@@ -1,3 +1,5 @@
+@import '@/styles/breakpoints';
+
 .board {
 	display: flex;
 	position: absolute;
@@ -9,6 +11,10 @@
 	height: 100vh;
 
 	&.isOpen {
+		left: 0;
+	}
+
+	@include respond-below('md') {
 		left: 0;
 	}
 }

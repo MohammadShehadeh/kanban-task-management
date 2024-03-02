@@ -24,6 +24,8 @@
 	gap: var(--sm-spacing);
 	position: absolute;
 	top: calc(100% + var(--sm-spacing));
+	background-color: var(--_dropdown-bg);
+	box-shadow: 0 0 8px #364e7e1a;
 }
 
 .left {

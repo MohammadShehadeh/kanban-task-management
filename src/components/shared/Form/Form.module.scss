@@ -6,6 +6,11 @@
 	margin-bottom: var(--md-spacing);
 	display: flex;
 	gap: var(--sm-spacing);
+
+	.formGroup,
+	&:only-of-type {
+		margin-bottom: 0;
+	}
 }
 
 .row {
