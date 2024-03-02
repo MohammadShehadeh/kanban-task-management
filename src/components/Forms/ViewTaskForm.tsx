@@ -17,12 +17,15 @@ export const ViewTaskForm = ({ title, description, subTasks }: any) => {
 					</Typography>
 				</Form.Group>
 
-				{subTasks.map(({ id, title }: any) => (
-					<Form.CheckboxGroup key={id}>
-						<Checkbox id={title} value={title} />
-						<Form.Label htmlFor={title}>{title}</Form.Label>
-					</Form.CheckboxGroup>
-				))}
+				<Form.Group direction="column">
+					<Form.Label htmlFor={title}>Subtasks (0 of 3)</Form.Label>
+					{subTasks.map(({ id, title }: any) => (
+						<Form.CheckboxGroup key={id}>
+							<Checkbox id={title} value={title} />
+							<Form.Label htmlFor={title}>{title}</Form.Label>
+						</Form.CheckboxGroup>
+					))}
+				</Form.Group>
 
 				<Form.Group>
 					<Form.Label htmlFor="status">Current Status</Form.Label>

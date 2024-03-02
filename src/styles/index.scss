@@ -110,3 +110,7 @@ textarea {
 	background-color: var(--input-bg);
 	font-size: 14px;
 }
+
+input[type="checkbox"] {
+	accent-color: var(--enigmatic-purple);
+}
