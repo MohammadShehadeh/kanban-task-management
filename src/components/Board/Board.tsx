@@ -5,14 +5,15 @@ import cx from 'classnames';
 
 import { Column } from '@/components/shared/Column';
 import { Badge } from '@/components/shared/Badge';
+import { BoardForm } from '@/components/Forms';
+import { Card } from '@/components/shared/Card';
+import { Button } from '@/components/shared/Button';
+import { AddIcon } from '@/components/shared/icons';
+
 import { useSidebarStore } from '@/store/sidebarStore';
+import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Board.module.scss';
-import { Card } from '../shared/Card';
-import { Button } from '../shared/Button';
-import { AddIcon } from '../shared/icons';
-import { BoardForm } from '../BoardForm';
-import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();

@@ -11,7 +11,7 @@ import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { Truncate } from '../shared/Truncate';
 import { useSidebarStore } from '@/store/sidebarStore';
 
-import { BoardForm } from '../BoardForm';
+import { BoardForm } from '../Forms';
 import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Sidebar.module.scss';

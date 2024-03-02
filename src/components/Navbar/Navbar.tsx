@@ -7,12 +7,10 @@ import { AddIcon, ArrowIcon } from '@/components/shared/icons';
 import { Dropdown } from '@/components/shared/Dropdown';
 import { Sidebar } from '@/components/Sidebar';
 import { Truncate } from '@/components/shared/Truncate';
-import { TaskForm } from '@/components/TaskForm';
-import { BoardForm } from '../BoardForm';
+import { TaskForm, DeleteForm, BoardForm } from '@/components/Forms';
+import { ADD_TASK, DELETE_BOARD, EDIT_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Navbar.module.scss';
-import { DeleteForm } from '../DeleteForm';
-import { ADD_TASK, DELETE_BOARD, EDIT_BOARD, useModalStore } from '@/store/modalStore';
 
 export const Navbar = () => {
 	const { openModal } = useModalStore();
@@ -63,14 +61,7 @@ export const Navbar = () => {
 				</Dropdown>
 			</div>
 
-			<TaskForm
-				type={ADD_TASK}
-				title="test"
-				description="desc"
-				subTasks={[{ title: 'test', completed: false }]}
-				status="done"
-			/>
-
+			<TaskForm type={ADD_TASK} />
 			<BoardForm type={EDIT_BOARD} />
 			<DeleteForm type={DELETE_BOARD} onDelete={() => {}} />
 		</div>
