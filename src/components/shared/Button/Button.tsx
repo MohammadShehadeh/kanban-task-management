@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 export interface ButtonProps
 	extends PropsWithChildren,
 		ButtonHTMLAttributes<HTMLButtonElement> {
-	color?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'white';
+	color?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'white' | 'default';
 	size?: 'sm' | 'md' | 'lg';
 	weight?: 'normal' | 'medium' | 'semibold' | 'bold';
 	variant?: 'contained' | 'normal';

@@ -1,0 +1,271 @@
+[
+	{
+		"id": 0,
+		"name": "Platform Launch",
+		"columns": [
+			{
+				"id": 0,
+				"name": "Todo",
+				"tasks": [
+					{
+						"id": 0,
+						"title": "Build UI for onboarding flow",
+						"description": "",
+						"subTasks": [
+							{ "title": "Sign up page", "completed": true },
+							{ "title": "Sign in page", "completed": false },
+							{ "title": "Welcome page", "completed": false }
+						]
+					},
+					{
+						"id": 1,
+						"title": "Build UI for search",
+						"description": "",
+						"subTasks": [{ "title": "Search page", "completed": false }]
+					},
+					{
+						"id": 2,
+						"title": "Build settings UI",
+						"description": "",
+						"subTasks": [
+							{ "title": "Account page", "completed": false },
+							{ "title": "Billing page", "completed": false }
+						]
+					},
+					{
+						"id": 3,
+						"title": "QA and test all major user journeys",
+						"description": "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
+						"subTasks": [
+							{ "title": "Internal testing", "completed": false },
+							{ "title": "External testing", "completed": false }
+						]
+					}
+				]
+			},
+			{
+				"id": 1,
+				"name": "Doing",
+				"tasks": [
+					{
+						"id": 4,
+						"title": "Design settings and search pages",
+						"description": "",
+						"subTasks": [
+							{ "title": "Settings - Account page", "completed": true },
+							{ "title": "Settings - Billing page", "completed": true },
+							{ "title": "Search page", "completed": false }
+						]
+					},
+					{
+						"id": 5,
+						"subTasks": [
+							{ "title": "Upgrade plan", "completed": true },
+							{ "title": "Cancel plan", "completed": true },
+							{ "title": "Update payment method", "completed": false }
+						]
+					},
+					{
+						"id": 6,
+						"title": "Design onboarding flow",
+						"description": "",
+						"subTasks": [
+							{ "title": "Sign up page", "completed": true },
+							{ "title": "Sign in page", "completed": false },
+							{ "title": "Welcome page", "completed": false }
+						]
+					},
+					{
+						"id": 7,
+						"title": "Add search enpoints",
+						"description": "",
+						"subTasks": [
+							{ "title": "Add search endpoint", "completed": true },
+							{ "title": "Define search filters", "completed": false }
+						]
+					},
+					{
+						"id": 8,
+						"title": "Add authentication endpoints",
+						"description": "",
+						"subTasks": [
+							{ "title": "Define user model", "completed": true },
+							{ "title": "Add auth endpoints", "completed": false }
+						]
+					},
+					{
+						"id": 9,
+						"title": "Research pricing points of various competitors and trial different business models",
+						"description": "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subTasks until we have a coherent proposition.",
+						"subTasks": [
+							{
+								"title": "Research competitor pricing and business models",
+								"completed": true
+							},
+							{
+								"title": "Outline a business model that works for our solution",
+								"completed": false
+							},
+							{
+								"title": "Talk to potential customers about our proposed solution and ask for fair price expectancy",
+								"completed": false
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": 2,
+				"name": "Done",
+				"tasks": [
+					{
+						"id": 10,
+						"title": "Conduct 5 wireframe tests",
+						"description": "Ensure the layout continues to make sense and we have strong buy-in from potential users.",
+						"subTasks": [
+							{ "title": "Complete 5 wireframe prototype tests", "completed": true }
+						]
+					},
+					{
+						"id": 11,
+						"title": "Create wireframe prototype",
+						"description": "Create a greyscale clickable wireframe prototype to test our asssumptions so far.",
+						"subTasks": [
+							{
+								"title": "Create clickable wireframe prototype in Balsamiq",
+								"completed": true
+							}
+						]
+					},
+					{
+						"id": 12,
+						"title": "Review results of usability tests and iterate",
+						"description": "Keep iterating through the subTasks until we're clear on the core concepts for the app.",
+						"subTasks": [
+							{
+								"title": "Meet to review notes from previous tests and plan changes",
+								"completed": true
+							},
+							{ "title": "Make changes to paper prototypes", "completed": true },
+							{ "title": "Conduct 5 usability tests", "completed": true }
+						]
+					},
+					{
+						"id": 13,
+						"title": "Create paper prototypes and conduct 10 usability tests with potential customers",
+						"description": "",
+						"subTasks": [
+							{ "title": "Create paper prototypes for version one", "completed": true },
+							{ "title": "Complete 10 usability tests", "completed": true }
+						]
+					},
+					{
+						"id": 14,
+						"title": "Market discovery",
+						"description": "We need to define and refine our core product. Interviews will help us learn common pain points and help us define the strongest MVP.",
+						"subTasks": [{ "title": "Interview 10 prospective customers", "completed": true }]
+					},
+					{
+						"id": 15,
+						"title": "Competitor analysis",
+						"description": "",
+						"subTasks": [
+							{ "title": "Find direct and indirect competitors", "completed": true },
+							{ "title": "SWOT analysis for each competitor", "completed": true }
+						]
+					},
+					{
+						"id": 16,
+						"title": "Research the market",
+						"description": "We need to get a solid overview of the market to ensure we have up-to-date estimates of market size and demand.",
+						"subTasks": [
+							{ "title": "Write up research analysis", "completed": true },
+							{ "title": "Calculate TAM", "completed": true }
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": 1,
+		"name": "Marketing Plan",
+		"columns": [
+			{
+				"id": 0,
+				"name": "Todo",
+				"tasks": [
+					{
+						"id": 17,
+						"title": "Plan Product Hunt launch",
+						"description": "11",
+						"subTasks": [
+							{ "title": "Find hunter", "completed": false },
+							{ "title": "Gather assets", "completed": false },
+							{ "title": "Draft product page", "completed": false },
+							{ "title": "Notify customers", "completed": false },
+							{ "title": "Notify network", "completed": false },
+							{ "title": "Launch!", "completed": false }
+						]
+					},
+					{
+						"id": 18,
+						"title": "Share on Show HN",
+						"description": "",
+						"subTasks": [
+							{ "title": "Draft out HN post", "completed": false },
+							{ "title": "Get feedback and refine", "completed": false },
+							{ "title": "Publish post", "completed": false }
+						]
+					},
+					{
+						"id": 19,
+						"title": "Write launch article to publish on multiple channels",
+						"description": "",
+						"subTasks": [
+							{ "title": "Write article", "completed": false },
+							{ "title": "Publish on LinkedIn", "completed": false },
+							{ "title": "Publish on Inndie Hackers", "completed": false },
+							{ "title": "Publish on Medium", "completed": false }
+						]
+					}
+				]
+			},
+			{ "id": 1, "name": "Doing", "tasks": [] }
+		]
+	},
+	{
+		"id": 2,
+		"name": "Roadmap",
+		"columns": [
+			{
+				"name": "Now",
+				"id": 0,
+				"tasks": [
+					{
+						"id": 20,
+						"title": "Launch version one",
+						"description": "",
+						"subTasks": [
+							{ "title": "Launch privately to our waitlist", "completed": false },
+							{ "title": "Launch publicly on PH, HN, etc.", "completed": false }
+						]
+					},
+					{
+						"id": 21,
+						"title": "Review early feedback and plan next steps for roadmap",
+						"description": "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
+						"subTasks": [
+							{ "title": "Interview 10 customers", "completed": false },
+							{
+								"title": "Review common customer pain points and suggestions",
+								"completed": false
+							},
+							{ "title": "Outline next steps for our roadmap", "completed": false }
+						]
+					}
+				]
+			}
+		]
+	}
+]

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { DragEvent, useState } from 'react';
+import React, { DragEvent } from 'react';
 import cx from 'classnames';
 
 import { Column } from '@/components/shared/Column';
@@ -11,121 +11,27 @@ import { Button } from '@/components/shared/Button';
 import { AddIcon } from '@/components/shared/icons';
 
 import { useSidebarStore } from '@/store/sidebarStore';
-import { ADD_BOARD, useModalStore } from '@/store/modalStore';
+import { EDIT_COLUMN, useModalStore } from '@/store/modalStore';
+import { useBoardDataStore } from '@/store/boardStore';
 
 import styles from './Board.module.scss';
 
 export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();
-	const { openModal } = useModalStore();
+	const { openModal, modalType } = useModalStore();
+	const { boardData, activeBoardIndex } = useBoardDataStore();
 
-	const [columns, setColumns] = useState([
-		{
-			id: 'TODO-1',
-			title: 'TODO',
-			tasks: [
-				{
-					id: 'TODO-tasks-1',
-					title: 'First TODO title',
-					description: 'First TODO Description',
-					subTasks: [
-						{
-							title: 'First TODO title',
-							completed: false,
-						},
-						{
-							title: 'second TODO title',
-							completed: false,
-						},
-					],
-				},
-			],
-		},
-		{
-			id: 'TODO-2',
-			title: 'TODO',
-			tasks: [
-				{
-					id: 'TODO-tasks-1',
-					title: 'First TODO title',
-					description: 'First TODO Description',
-					subTasks: [
-						{
-							title: 'First TODO title',
-							completed: false,
-						},
-						{
-							title: 'second TODO title',
-							completed: false,
-						},
-					],
-				},
-			],
-		},
-		{
-			id: 'DONE-1',
-			title: 'DONE',
-			tasks: [
-				{
-					id: 'DONE-tasks-1',
-					title: 'First DONE title',
-					description: 'First DONE Description',
-					subTasks: [
-						{
-							title: 'First DONE title',
-							completed: false,
-						},
-						{
-							title: 'second DONE title',
-							completed: false,
-						},
-					],
-				},
-				{
-					id: 'DONE-tasks-2',
-					title: 'First DONE title',
-					description: 'First DONE Description',
-					subTasks: [
-						{
-							title: 'First DONE title',
-							completed: false,
-						},
-						{
-							title: 'second DONE title',
-							completed: false,
-						},
-					],
-				},
-				{
-					id: 'DONE-tasks-3',
-					title: 'First DONE title',
-					description: 'First DONE Description',
-					subTasks: [
-						{
-							title: 'First DONE title',
-							completed: false,
-						},
-						{
-							title: 'second DONE title',
-							completed: false,
-						},
-					],
-				},
-			],
-		},
-	]);
-
-	const handleOnDrag = (e: DragEvent, columnType: string, taskType: string) => {
-		e.dataTransfer.setData('columnType', columnType);
-		e.dataTransfer.setData('taskType', taskType);
+	const handleOnDrag = (e: DragEvent, columnType: number, taskType: number) => {
+		e.dataTransfer.setData('columnType', columnType.toString());
+		e.dataTransfer.setData('taskType', taskType.toString());
 	};
 
-	const handleOnDrop = (e: DragEvent, columnTarget: string) => {
+	const handleOnDrop = (e: DragEvent, columnTarget: number) => {
 		const taskType = e.dataTransfer.getData('taskType');
 		const columnType = e.dataTransfer.getData('columnType');
 
 		// Find the task with the specified ID
-		let updatedColumns = JSON.parse(JSON.stringify(columns));
+		let updatedColumns = JSON.parse(JSON.stringify([]));
 
 		const task = updatedColumns.reduce((acc: any, column: any) => {
 			if (acc || column.id !== columnType) {
@@ -154,7 +60,7 @@ export const Board = () => {
 			return [...acc, updatedCol];
 		}, []);
 
-		setColumns(updatedColumns);
+		// setColumns(updatedColumns);
 	};
 
 	const handleDragOver = (event: DragEvent) => {
@@ -163,13 +69,13 @@ export const Board = () => {
 
 	return (
 		<div className={cx(styles.board, { [styles.isOpen]: !isSidebarOpen })}>
-			{columns.map((column, columnIndex) => (
+			{boardData[activeBoardIndex].columns?.map((column, columnIndex) => (
 				<div className={styles.task} key={columnIndex}>
-					<Badge order={1} className={styles.sticky}>
-						{column.title} ({column.tasks.length})
+					<Badge order={columnIndex + 1} className={styles.sticky}>
+						{column.name} ({column.tasks.length})
 					</Badge>
 					<Column
-						data-name={column.title}
+						data-name={column.name}
 						onDragOver={handleDragOver}
 						onDrop={(e) => handleOnDrop(e, column.id)}
 					>
@@ -181,8 +87,8 @@ export const Board = () => {
 							>
 								<Card.Headline>{task.title}</Card.Headline>
 								<Card.Description>
-									{task.subTasks.filter((subTask) => subTask.completed).length} of{' '}
-									{task.subTasks.length} subtasks
+									{task.subTasks?.filter((subTask) => subTask.completed).length} of{' '}
+									{task.subTasks?.length} subtasks
 								</Card.Description>
 							</Card>
 						))}
@@ -197,14 +103,20 @@ export const Board = () => {
 						size="lg"
 						color="secondary"
 						center
-						onClick={() => openModal(ADD_BOARD)}
+						onClick={() => openModal(EDIT_COLUMN)}
 					>
 						<AddIcon /> New Column
 					</Button>
 				</Column>
 			</div>
 
-			<BoardForm type={ADD_BOARD} />
+			{modalType == EDIT_COLUMN && (
+				<BoardForm
+					type={EDIT_COLUMN}
+					name={boardData[activeBoardIndex].name}
+					columns={boardData[activeBoardIndex].columns}
+				/>
+			)}
 		</div>
 	);
 };

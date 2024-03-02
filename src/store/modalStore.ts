@@ -4,6 +4,7 @@ import { UseBoundStoreWithEqualityFn, createWithEqualityFn } from 'zustand/tradi
 export const ADD_BOARD = 'add_board';
 export const DELETE_BOARD = 'delete_board';
 export const EDIT_BOARD = 'edit_board';
+export const EDIT_COLUMN = 'edit_column';
 
 export const ADD_TASK = 'add_task';
 export const DELETE_TASK = 'delete_task';
@@ -15,6 +16,7 @@ export const MODALS = {
 	[ADD_BOARD]: ADD_BOARD,
 	[DELETE_BOARD]: DELETE_BOARD,
 	[EDIT_BOARD]: EDIT_BOARD,
+	[EDIT_COLUMN]: EDIT_COLUMN,
 	[ADD_TASK]: ADD_TASK,
 	[DELETE_TASK]: DELETE_TASK,
 	[EDIT_TASK]: EDIT_TASK,

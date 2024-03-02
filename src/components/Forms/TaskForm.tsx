@@ -8,7 +8,7 @@ import { Form } from '@/components/shared/Form';
 import { Textarea } from '@/components/shared/Textarea';
 import { Select } from '@/components/shared/Select';
 import { Modal } from '../shared/Modal/Modal';
-import { ADD_TASK, ModalType, useModalStore } from '@/store/modalStore';
+import { ADD_TASK, ModalType } from '@/store/modalStore';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -35,7 +35,6 @@ export const TaskForm = ({
 	status = '',
 	type,
 }: TaskFormProps) => {
-	const { isModalOpen, modalType, closeModal } = useModalStore();
 	const {
 		register,
 		handleSubmit,
@@ -67,10 +66,8 @@ export const TaskForm = ({
 		console.log('data: ', data);
 	};
 
-	if (!isModalOpen || modalType !== type) return;
-
 	return (
-		<Modal onClose={closeModal}>
+		<Modal>
 			<Form onSubmit={handleSubmit(formHandler)}>
 				<Form.Title>{type === ADD_TASK ? 'Add New Task' : 'Edit Task'}</Form.Title>
 				<Form.Group>

@@ -20,7 +20,7 @@
 	border-right: 1px solid var(--_border-line-color);
 	padding: var(--md-spacing) var(--lg-spacing);
 	white-space: nowrap;
-	width: 300px;
+	width: var(--sidebar-width);
 	transition: width 0.3s;
 	overflow: hidden;
 	flex-shrink: 0;

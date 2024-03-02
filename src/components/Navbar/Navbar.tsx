@@ -11,9 +11,11 @@ import { TaskForm, DeleteForm, BoardForm } from '@/components/Forms';
 import { ADD_TASK, DELETE_BOARD, EDIT_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Navbar.module.scss';
+import { useBoardDataStore } from '@/store/boardStore';
 
 export const Navbar = () => {
-	const { openModal } = useModalStore();
+	const { openModal, modalType } = useModalStore();
+	const { boardData, activeBoardIndex } = useBoardDataStore();
 
 	return (
 		<div className={styles.navbar}>
@@ -35,7 +37,6 @@ export const Navbar = () => {
 			>
 				<Sidebar isMobile />
 			</Dropdown>
-
 			<div className={styles.settings}>
 				<Button onClick={() => openModal(ADD_TASK)}>
 					<AddIcon />
@@ -61,9 +62,17 @@ export const Navbar = () => {
 				</Dropdown>
 			</div>
 
-			<TaskForm type={ADD_TASK} />
-			<BoardForm type={EDIT_BOARD} />
-			<DeleteForm type={DELETE_BOARD} onDelete={() => {}} />
+			{modalType == ADD_TASK && <TaskForm type={ADD_TASK} />}
+
+			{modalType == EDIT_BOARD && (
+				<BoardForm
+					type={EDIT_BOARD}
+					name={boardData[activeBoardIndex].name}
+					columns={boardData[activeBoardIndex].columns}
+				/>
+			)}
+
+			{modalType == DELETE_BOARD && <DeleteForm type={DELETE_BOARD} onDelete={() => {}} />}
 		</div>
 	);
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Typography } from '../shared/Typography';
-import { Grid } from '../shared/Grid';
-import { Button } from '../shared/Button';
+import { Typography } from '@/components/shared/Typography';
+import { Grid } from '@/components/shared/Grid';
+import { Button } from '@/components/shared/Button';
+import { Modal } from '@/components/shared/Modal/Modal';
 import { ModalType, useModalStore } from '@/store/modalStore';
-import { Modal } from '../shared/Modal/Modal';
 
 interface DeleteFormProps {
 	onDelete: () => void;
@@ -11,12 +11,10 @@ interface DeleteFormProps {
 }
 
 export const DeleteForm = ({ onDelete, type }: DeleteFormProps) => {
-	const { isModalOpen, modalType, closeModal } = useModalStore();
-
-	if (modalType !== type || !isModalOpen) return;
+	const { closeModal } = useModalStore();
 
 	return (
-		<Modal onClose={closeModal}>
+		<Modal>
 			<Typography as="h3" color="danger">
 				Delete this board?
 			</Typography>

@@ -4,7 +4,7 @@
 	border-right: 1px solid var(--_border-line-color);
 	display: flex;
 	align-items: center;
-	width: 300px;
+	width: var(--sidebar-width);
 	padding: var(--lg-spacing);
 	flex-shrink: 0;
 

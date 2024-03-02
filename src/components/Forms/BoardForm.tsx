@@ -6,7 +6,7 @@ import { AddIcon, RemoveIcon } from '@/components/shared/icons';
 import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
 import { Modal } from '../shared/Modal/Modal';
-import { ADD_BOARD, ModalType, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD, ModalType } from '@/store/modalStore';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -24,7 +24,6 @@ interface BoardFormProps {
 }
 
 export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFormProps) => {
-	const { isModalOpen, modalType, closeModal } = useModalStore();
 	const {
 		register,
 		handleSubmit,
@@ -46,10 +45,8 @@ export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFo
 		console.log('data: ', data);
 	};
 
-	if (!isModalOpen || modalType !== type) return;
-
 	return (
-		<Modal onClose={closeModal}>
+		<Modal>
 			<Form onSubmit={handleSubmit(formHandler)}>
 				<Form.Title>{type === ADD_BOARD ? 'Add New Board' : 'Edit Board'}</Form.Title>
 				<Form.Group>

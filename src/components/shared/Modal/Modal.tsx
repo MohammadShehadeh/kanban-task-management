@@ -3,17 +3,15 @@ import React, { PropsWithChildren, useRef } from 'react';
 import { Card } from '@/components/shared/Card';
 
 import styles from './Modal.module.scss';
+import { useModalStore } from '@/store/modalStore';
 
-interface ModalProps extends PropsWithChildren {
-	onClose: (value?: boolean) => void;
-}
-
-export const Modal = ({ onClose, children }: ModalProps) => {
+export const Modal = ({ children }: PropsWithChildren) => {
 	const modalRef = useRef(null);
+	const { closeModal } = useModalStore();
 
 	return (
 		<div className={styles.modal} ref={modalRef}>
-			<div className={styles.backdrop} onClick={() => onClose()}></div>
+			<div className={styles.backdrop} onClick={() => closeModal()}></div>
 			<Card className={styles.content}>{children}</Card>
 		</div>
 	);
