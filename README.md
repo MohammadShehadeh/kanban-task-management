@@ -25,7 +25,7 @@ Users should be able to:
 - Mark subtasks as complete and move tasks between columns
 - Hide/show the board sidebar
 
-Expected Behavior:
+Expected Behavior: (__In Progress__)
 
 - Boards
   - Clicking different boards in the sidebar will change to the selected board.
@@ -40,7 +40,7 @@ Expected Behavior:
   - Adding a new task adds it to the bottom of the relevant column.
   - Updating a task's status will move the task to the relevant column.
 
-Bonus:
+Bonus: (__In Progress__)
   - The tasks can be dragged and dropped to a new column.
 
 ### Screenshot
