@@ -35,7 +35,13 @@
 }
 
 .checkbox {
-	padding: var(--md-spacing);
-	margin-bottom: var(--sm-spacing);
 	background-color: var(--_theme-switch-bg);
+	margin-bottom: var(--sm-spacing);
+	padding-inline: var(--md-spacing);
+
+	label {
+		cursor: pointer;
+		flex-grow: 1;
+		padding-block: var(--md-spacing);
+	}
 }

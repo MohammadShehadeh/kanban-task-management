@@ -11,8 +11,10 @@ export const Modal = ({ children }: PropsWithChildren) => {
 
 	return (
 		<div className={styles.modal} ref={modalRef}>
-			<div className={styles.backdrop} onClick={() => closeModal()}></div>
-			<Card className={styles.content}>{children}</Card>
+			<div className={styles.wrapper}>
+				<div className={styles.backdrop} onClick={() => closeModal()}></div>
+				<Card className={styles.content}>{children}</Card>
+			</div>
 		</div>
 	);
 };

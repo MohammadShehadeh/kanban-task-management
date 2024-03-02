@@ -6,7 +6,7 @@ import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import { useToggle } from '@/hooks/useToggle';
 
 interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
-	register: Record<any, any>;
+	register?: Record<any, any>;
 	error?: boolean;
 	options: string[];
 	setValue: (value: string) => void;
