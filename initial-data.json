@@ -59,6 +59,8 @@
 					},
 					{
 						"id": 5,
+						"title": "Update payment method",
+						"description": "",
 						"subTasks": [
 							{ "title": "Upgrade plan", "completed": true },
 							{ "title": "Cancel plan", "completed": true },

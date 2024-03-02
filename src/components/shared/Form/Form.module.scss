@@ -33,3 +33,9 @@
 	flex-direction: column;
 	gap: var(--sm-spacing);
 }
+
+.checkbox {
+	padding: var(--md-spacing);
+	margin-bottom: var(--sm-spacing);
+	background-color: var(--_theme-switch-bg);
+}

@@ -7,20 +7,19 @@ import { AddIcon, ArrowIcon } from '@/components/shared/icons';
 import { Dropdown } from '@/components/shared/Dropdown';
 import { Sidebar } from '@/components/Sidebar';
 import { Truncate } from '@/components/shared/Truncate';
-import { TaskForm, DeleteForm, BoardForm } from '@/components/Forms';
 import { ADD_TASK, DELETE_BOARD, EDIT_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Navbar.module.scss';
 import { useBoardDataStore } from '@/store/boardStore';
 
 export const Navbar = () => {
-	const { openModal, modalType } = useModalStore();
-	const { boardData, activeBoardIndex } = useBoardDataStore();
+	const { openModal } = useModalStore();
+	const { activeBoard } = useBoardDataStore();
 
 	return (
 		<div className={styles.navbar}>
 			<Truncate as="h1" lines={1} className={styles.desktop}>
-				Platform Launch
+				{activeBoard.name}
 			</Truncate>
 			<Dropdown
 				className={styles.mobile}
@@ -28,7 +27,7 @@ export const Navbar = () => {
 				placeholder={
 					<Button variant="normal" color="white">
 						<Truncate as="h1" lines={1}>
-							Platform Launch
+							{activeBoard.name}
 						</Truncate>
 						<ArrowIcon />
 					</Button>
@@ -61,18 +60,6 @@ export const Navbar = () => {
 					</Button>
 				</Dropdown>
 			</div>
-
-			{modalType == ADD_TASK && <TaskForm type={ADD_TASK} />}
-
-			{modalType == EDIT_BOARD && (
-				<BoardForm
-					type={EDIT_BOARD}
-					name={boardData[activeBoardIndex].name}
-					columns={boardData[activeBoardIndex].columns}
-				/>
-			)}
-
-			{modalType == DELETE_BOARD && <DeleteForm type={DELETE_BOARD} onDelete={() => {}} />}
 		</div>
 	);
 };

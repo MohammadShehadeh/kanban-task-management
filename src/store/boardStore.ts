@@ -40,7 +40,9 @@ type BoardData = z.infer<typeof BoardSchema>;
 
 interface ZStore {
 	boardData: BoardData;
-	activeBoardIndex: number;
+	activeTask: any;
+	activeBoard: any;
+	setActiveTask: any;
 	createBoard: () => void;
 	editBoard: () => void;
 	setActiveBoard: (index: number) => void;
@@ -56,8 +58,14 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 	// const boardInitialData = results.success ? results.data : data;
 	return createWithEqualityFn((set) => ({
 		boardData: data,
-		activeBoardIndex: 0,
-		setActiveBoard: (index: number) => set(() => ({ activeBoardIndex: index })),
+		activeBoard: data[0],
+		setActiveBoard: (index: number) =>
+			set((state) => ({ activeBoard: state.boardData?.[index] })),
+		activeTask: {},
+		setActiveTask: (boardId: number, columnId: number, taskId: number) =>
+			set((state) => ({
+				activeTask: state.boardData?.[boardId].columns[columnId].tasks[taskId],
+			})),
 		// board handlers
 		createBoard: () => set((state) => state),
 		editBoard: () => set((state) => state),

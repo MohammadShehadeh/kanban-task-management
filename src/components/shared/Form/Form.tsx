@@ -44,3 +44,9 @@ const Group = ({
 };
 
 Form.Group = Group;
+
+const CheckboxGroup = ({ children }: PropsWithChildren) => {
+	return <div className={cx(styles.formGroup, styles.row, styles.checkbox)}>{children}</div>;
+};
+
+Form.CheckboxGroup = CheckboxGroup;

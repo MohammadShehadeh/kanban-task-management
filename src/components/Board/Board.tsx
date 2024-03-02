@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 
 import React, { DragEvent } from 'react';
@@ -5,21 +6,20 @@ import cx from 'classnames';
 
 import { Column } from '@/components/shared/Column';
 import { Badge } from '@/components/shared/Badge';
-import { BoardForm } from '@/components/Forms';
 import { Card } from '@/components/shared/Card';
 import { Button } from '@/components/shared/Button';
 import { AddIcon } from '@/components/shared/icons';
 
 import { useSidebarStore } from '@/store/sidebarStore';
-import { EDIT_COLUMN, useModalStore } from '@/store/modalStore';
+import { EDIT_COLUMN, VIEW_TASK, useModalStore } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
 
 import styles from './Board.module.scss';
 
 export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();
-	const { openModal, modalType } = useModalStore();
-	const { boardData, activeBoardIndex } = useBoardDataStore();
+	const { openModal } = useModalStore();
+	const { activeBoard, setActiveTask } = useBoardDataStore();
 
 	const handleOnDrag = (e: DragEvent, columnType: number, taskType: number) => {
 		e.dataTransfer.setData('columnType', columnType.toString());
@@ -69,7 +69,7 @@ export const Board = () => {
 
 	return (
 		<div className={cx(styles.board, { [styles.isOpen]: !isSidebarOpen })}>
-			{boardData[activeBoardIndex].columns?.map((column, columnIndex) => (
+			{activeBoard.columns?.map((column, columnIndex) => (
 				<div className={styles.task} key={columnIndex}>
 					<Badge order={columnIndex + 1} className={styles.sticky}>
 						{column.name} ({column.tasks.length})
@@ -83,6 +83,10 @@ export const Board = () => {
 							<Card
 								draggable
 								key={taskIndex}
+								onClick={() => {
+									openModal(VIEW_TASK);
+									setActiveTask(activeBoard.id, columnIndex, taskIndex);
+								}}
 								onDragStart={(e) => handleOnDrag(e, column.id, task.id)}
 							>
 								<Card.Headline>{task.title}</Card.Headline>
@@ -109,14 +113,6 @@ export const Board = () => {
 					</Button>
 				</Column>
 			</div>
-
-			{modalType == EDIT_COLUMN && (
-				<BoardForm
-					type={EDIT_COLUMN}
-					name={boardData[activeBoardIndex].name}
-					columns={boardData[activeBoardIndex].columns}
-				/>
-			)}
 		</div>
 	);
 };

@@ -6,8 +6,8 @@ import { Modal } from '@/components/shared/Modal/Modal';
 import { ModalType, useModalStore } from '@/store/modalStore';
 
 interface DeleteFormProps {
-	onDelete: () => void;
-	type: ModalType;
+	onDelete?: () => void;
+	type?: ModalType;
 }
 
 export const DeleteForm = ({ onDelete, type }: DeleteFormProps) => {
@@ -24,7 +24,7 @@ export const DeleteForm = ({ onDelete, type }: DeleteFormProps) => {
 			</Typography>
 			<Grid>
 				<Grid.Col lg={6}>
-					<Button color="danger" size="sm" center fullWidth onClick={() => onDelete()}>
+					<Button color="danger" size="sm" center fullWidth onClick={() => onDelete?.()}>
 						Delete
 					</Button>
 				</Grid.Col>

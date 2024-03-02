@@ -11,7 +11,6 @@ import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { Truncate } from '../shared/Truncate';
 import { useSidebarStore } from '@/store/sidebarStore';
 
-import { BoardForm } from '../Forms';
 import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Sidebar.module.scss';
@@ -23,8 +22,8 @@ interface SidebarProps {
 
 export const Sidebar = ({ isMobile }: SidebarProps) => {
 	const { toggleSideBar, isSidebarOpen } = useSidebarStore();
-	const { setActiveBoard, activeBoardIndex, boardData } = useBoardDataStore();
-	const { openModal, modalType } = useModalStore();
+	const { setActiveBoard, activeBoard, boardData } = useBoardDataStore();
+	const { openModal } = useModalStore();
 
 	if (!isSidebarOpen && !isMobile) {
 		return (
@@ -54,7 +53,9 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 					{boardData.map((item, index) => (
 						<Button
 							key={index}
-							className={cx(styles.button, index === activeBoardIndex ? styles.active : '')}
+							className={cx(styles.button, {
+								[styles.active]: item.name === activeBoard.name,
+							})}
 							variant="normal"
 							size="md"
 							color="tertiary"
@@ -94,8 +95,6 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 					)}
 				</div>
 			</div>
-
-			{modalType == ADD_BOARD && <BoardForm type={ADD_BOARD} />}
 		</div>
 	);
 };
