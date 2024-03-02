@@ -25,7 +25,7 @@ interface DropdownProps extends PropsWithChildren {
 
 const DefaultPlaceholder = ({ ...restProps }: ButtonHTMLAttributes<HTMLButtonElement>) => {
 	return (
-		<button className={styles.settings} {...restProps}>
+		<button className={styles.settings} type="button" {...restProps}>
 			<SettingsIcon />
 		</button>
 	);

@@ -43,37 +43,44 @@ interface ZStore {
 	activeTask: any;
 	activeBoard: any;
 	setActiveTask: any;
-	createBoard: () => void;
-	editBoard: () => void;
-	setActiveBoard: (index: number) => void;
-	deleteBoard: () => void;
-	createTask: () => void;
-	editTask: () => void;
-	deleteTask: () => void;
+	setActiveBoard: (id: number) => void;
+	// createBoard: () => void;
+	// editBoard: () => void;
+	// deleteBoard: () => void;
+	// createTask: () => void;
+	// editTask: () => void;
+	// deleteTask: () => void;
 }
 
 const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
-	// const boardData = JSON.parse(localStorage.getItem('msh_board') || '{}');
-	// const results = BoardSchema.safeParse(boardData);
-	// const boardInitialData = results.success ? results.data : data;
 	return createWithEqualityFn((set) => ({
 		boardData: data,
 		activeBoard: data[0],
-		setActiveBoard: (index: number) =>
-			set((state) => ({ activeBoard: state.boardData?.[index] })),
 		activeTask: {},
-		setActiveTask: (boardId: number, columnId: number, taskId: number) =>
-			set((state) => ({
-				activeTask: state.boardData?.[boardId].columns[columnId].tasks[taskId],
-			})),
-		// board handlers
-		createBoard: () => set((state) => state),
-		editBoard: () => set((state) => state),
-		deleteBoard: () => set((state) => state),
-		// task handlers
-		createTask: () => set((state) => state),
-		editTask: () => set((state) => state),
-		deleteTask: () => set((state) => state),
+
+		setActiveBoard: (id: number) =>
+			set((state) => {
+				const activeBoard = state.boardData.find((board) => board.id === id);
+				return { activeBoard };
+			}),
+		setActiveTask: (columnId: number, taskId: number) =>
+			set((state) => {
+				const activeColumn = state.activeBoard?.columns?.find(
+					(column: any) => column.id === columnId
+				);
+				const activeTask = activeColumn?.tasks?.find((task: any) => task.id === taskId);
+
+				return { activeTask: activeTask };
+			}),
+
+		// // board handlers
+		// createBoard: () => set((state) => state),
+		// editBoard: () => set((state) => state),
+		// deleteBoard: () => set((state) => state),
+		// // task handlers
+		// createTask: () => set((state) => state),
+		// editTask: () => set((state) => state),
+		// deleteTask: () => set((state) => state),
 	}));
 };
 

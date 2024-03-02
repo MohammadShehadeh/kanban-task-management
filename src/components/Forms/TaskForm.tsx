@@ -7,7 +7,7 @@ import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
 import { Textarea } from '@/components/shared/Textarea';
 import { Select } from '@/components/shared/Select';
-import { Modal } from '../shared/Modal/Modal';
+import { Modal } from '@/components/shared/Modal/Modal';
 import { ADD_TASK, ModalType } from '@/store/modalStore';
 
 const requiredMessage = "Can't be empty";

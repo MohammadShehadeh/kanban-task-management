@@ -21,46 +21,38 @@ export const Board = () => {
 	const { openModal } = useModalStore();
 	const { activeBoard, setActiveTask } = useBoardDataStore();
 
-	const handleOnDrag = (e: DragEvent, columnType: number, taskType: number) => {
-		e.dataTransfer.setData('columnType', columnType.toString());
-		e.dataTransfer.setData('taskType', taskType.toString());
+	const handleOnDrag = (e: DragEvent, columnId: number, taskId: number) => {
+		// e.dataTransfer.setData('columnType', columnType.toString());
+		// e.dataTransfer.setData('taskType', taskType.toString());
 	};
 
-	const handleOnDrop = (e: DragEvent, columnTarget: number) => {
-		const taskType = e.dataTransfer.getData('taskType');
-		const columnType = e.dataTransfer.getData('columnType');
-
-		// Find the task with the specified ID
-		let updatedColumns = JSON.parse(JSON.stringify([]));
-
-		const task = updatedColumns.reduce((acc: any, column: any) => {
-			if (acc || column.id !== columnType) {
-				return acc;
-			}
-
-			return column.tasks.find((task: any) => task.id === taskType);
-		}, undefined);
-
-		updatedColumns = updatedColumns.reduce((acc: any, column: any) => {
-			const updatedCol: any = {
-				...column,
-			};
-			updatedCol.tasks = [];
-			updatedCol.tasks =
-				column.tasks.filter((task: any) => {
-					if (task.id !== taskType) {
-						return task;
-					}
-				}) || [];
-
-			if (column.id === columnTarget) {
-				updatedCol.tasks.push(task);
-			}
-
-			return [...acc, updatedCol];
-		}, []);
-
-		// setColumns(updatedColumns);
+	const handleOnDrop = (e: DragEvent, targetId: number) => {
+		// const taskType = e.dataTransfer.getData('taskType');
+		// const columnType = e.dataTransfer.getData('columnType');
+		// // Find the task with the specified ID
+		// let updatedColumns = JSON.parse(JSON.stringify([]));
+		// const task = updatedColumns.reduce((acc: any, column: any) => {
+		// 	if (acc || column.id !== columnType) {
+		// 		return acc;
+		// 	}
+		// 	return column.tasks.find((task: any) => task.id === taskType);
+		// }, undefined);
+		// updatedColumns = updatedColumns.reduce((acc: any, column: any) => {
+		// 	const updatedCol: any = {
+		// 		...column,
+		// 	};
+		// 	updatedCol.tasks = [];
+		// 	updatedCol.tasks =
+		// 		column.tasks.filter((task: any) => {
+		// 			if (task.id !== taskType) {
+		// 				return task;
+		// 			}
+		// 		}) || [];
+		// 	if (column.id === columnTarget) {
+		// 		updatedCol.tasks.push(task);
+		// 	}
+		// 	return [...acc, updatedCol];
+		// }, []);
 	};
 
 	const handleDragOver = (event: DragEvent) => {
@@ -85,7 +77,7 @@ export const Board = () => {
 								key={taskIndex}
 								onClick={() => {
 									openModal(VIEW_TASK);
-									setActiveTask(activeBoard.id, columnIndex, taskIndex);
+									setActiveTask(column.id, task.id);
 								}}
 								onDragStart={(e) => handleOnDrag(e, column.id, task.id)}
 							>

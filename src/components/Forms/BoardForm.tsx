@@ -5,7 +5,7 @@ import { Button } from '@/components/shared/Button';
 import { AddIcon, RemoveIcon } from '@/components/shared/icons';
 import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
-import { Modal } from '../shared/Modal/Modal';
+import { Modal } from '@/components/shared/Modal/Modal';
 import { ADD_BOARD, ModalType } from '@/store/modalStore';
 
 const requiredMessage = "Can't be empty";

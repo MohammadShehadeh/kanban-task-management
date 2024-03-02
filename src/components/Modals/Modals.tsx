@@ -1,5 +1,9 @@
 'use client';
 
+import React from 'react';
+
+import { BoardForm, DeleteForm, TaskForm, ViewTaskForm } from '@/components/Forms';
+
 import {
 	ADD_BOARD,
 	ADD_TASK,
@@ -11,9 +15,6 @@ import {
 	VIEW_TASK,
 	useModalStore,
 } from '@/store/modalStore';
-import React from 'react';
-import { BoardForm, DeleteForm, TaskForm } from '../Forms';
-import { ViewTaskForm } from '../Forms/ViewTaskForm';
 import { useBoardDataStore } from '@/store/boardStore';
 
 export const Modals = () => {

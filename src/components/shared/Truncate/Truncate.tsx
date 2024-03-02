@@ -6,7 +6,7 @@ import styles from './Truncate.module.scss';
 interface TruncateProps extends PropsWithChildren {
 	lines: number;
 	className?: string;
-	as?: 'p' | 'h1';
+	as?: 'p' | 'h1' | 'h2' | 'h3';
 }
 
 export const Truncate = ({ as: As = 'p', lines, className, children }: TruncateProps) => {

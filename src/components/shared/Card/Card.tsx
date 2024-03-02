@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, PropsWithChildren } from 'react';
 import cx from 'classnames';
 
+import { Truncate } from '@/components/shared/Truncate';
+
 import styles from './Card.module.scss';
-import { Truncate } from '../Truncate';
 
 interface CardProps extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
 	className?: string;

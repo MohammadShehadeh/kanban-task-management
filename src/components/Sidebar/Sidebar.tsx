@@ -8,7 +8,7 @@ import { Button } from '@/components/shared/Button';
 import { BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 
-import { Truncate } from '../shared/Truncate';
+import { Truncate } from '@/components/shared/Truncate';
 import { useSidebarStore } from '@/store/sidebarStore';
 
 import { ADD_BOARD, useModalStore } from '@/store/modalStore';
@@ -54,13 +54,14 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 						<Button
 							key={index}
 							className={cx(styles.button, {
-								[styles.active]: item.name === activeBoard.name,
+								[styles.active]: item.id === activeBoard.id,
 							})}
 							variant="normal"
 							size="md"
 							color="tertiary"
 							weight="bold"
-							onClick={() => setActiveBoard(index)}
+							data-id={item.id}
+							onClick={() => setActiveBoard(item.id)}
 						>
 							<BoardIcon />
 							<Truncate lines={1}>{item.name}</Truncate>
