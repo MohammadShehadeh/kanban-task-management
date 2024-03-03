@@ -32,10 +32,16 @@ interface ZStore {
 	isModalOpen: boolean;
 }
 
+const initialState: Omit<ZStore, 'closeModal' | 'openModal'> = {
+	modalType: '',
+	isModalOpen: false,
+};
+
 export const useModalStore: UseBoundStoreWithEqualityFn<StoreApi<ZStore>> =
 	createWithEqualityFn((set) => ({
-		modalType: '',
-		isModalOpen: false,
+		modalType: initialState.modalType,
+		isModalOpen: initialState.isModalOpen,
+
 		closeModal: () => set(() => ({ isModalOpen: false, modalType: '' })),
 		openModal: (type: ModalType) => set(() => ({ isModalOpen: true, modalType: type })),
 	}));

@@ -19,4 +19,5 @@
 	flex-grow: 1;
 	overflow: auto;
 	position: relative;
+	scroll-snap-type: x mandatory;
 }

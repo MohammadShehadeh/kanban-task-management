@@ -4,63 +4,65 @@ import { z } from 'zod';
 
 import data from '../../initial-data.json';
 
-const SubTaskSchema = z.array(
-	z.object({
-		title: z.string(),
-		completed: z.boolean(),
-	})
-);
+const SingleSubTaskSchema = z.object({
+	title: z.string(),
+	completed: z.boolean(),
+});
 
-const TaskSchema = z.array(
-	z.object({
-		id: z.number(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		subTasks: SubTaskSchema,
-	})
-);
+const SubTaskSchema = z.array(SingleSubTaskSchema);
 
-const ColumnSchema = z.array(
-	z.object({
-		id: z.number(),
-		name: z.string(),
-		tasks: TaskSchema,
-	})
-);
+const SingleTaskSchema = z.object({
+	id: z.number(),
+	title: z.string().optional(),
+	description: z.string().optional(),
+	subTasks: SubTaskSchema,
+});
 
-const BoardSchema = z.array(
-	z.object({
-		id: z.number(),
-		name: z.string(),
-		columns: ColumnSchema,
-	})
-);
+const TaskSchema = z.array(SingleTaskSchema);
 
-type BoardData = z.infer<typeof BoardSchema>;
+const SingleColumnSchema = z.object({
+	id: z.number(),
+	name: z.string(),
+	tasks: TaskSchema,
+});
+
+const ColumnSchema = z.array(SingleColumnSchema);
+
+const SingleBoardSchema = z.object({
+	id: z.number(),
+	name: z.string(),
+	columns: ColumnSchema,
+});
+
+const BoardSchema = z.array(SingleBoardSchema);
+
+type Task = z.infer<typeof SingleTaskSchema>;
+type BoardData = z.infer<typeof SingleBoardSchema>;
 
 interface ZStore {
-	boardData: BoardData;
-	activeTask: any;
-	activeBoard: any;
-	setActiveTask: any;
+	boardData?: BoardData[];
+	activeTask?: Task;
+	activeBoard?: BoardData;
+
+	setActiveTask: (columnId: number, taskId: number) => void;
 	setActiveBoard: (id: number) => void;
-	// createBoard: () => void;
-	// editBoard: () => void;
-	// deleteBoard: () => void;
-	// createTask: () => void;
-	// editTask: () => void;
-	// deleteTask: () => void;
+	createBoard: () => void;
+	editBoard: () => void;
+	deleteBoard: (id: number) => void;
+	createTask: () => void;
+	editTask: () => void;
+	deleteTask: (boardId: number, taskId: number) => void;
 }
 
 const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 	return createWithEqualityFn((set) => ({
 		boardData: data,
 		activeBoard: data[0],
-		activeTask: {},
+		activeTask: undefined,
 
 		setActiveBoard: (id: number) =>
 			set((state) => {
-				const activeBoard = state.boardData.find((board) => board.id === id);
+				const activeBoard = state.boardData?.find((board) => board.id === id);
 				return { activeBoard };
 			}),
 		setActiveTask: (columnId: number, taskId: number) =>
@@ -74,13 +76,35 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 			}),
 
 		// // board handlers
-		// createBoard: () => set((state) => state),
-		// editBoard: () => set((state) => state),
-		// deleteBoard: () => set((state) => state),
+		createBoard: () => set((state) => state),
+		editBoard: () => set((state) => state),
+		deleteBoard: (boardId: number) =>
+			set((state) => {
+				const newBoardData = state.boardData?.filter((board) => board.id !== boardId);
+
+				return { boardData: newBoardData, activeBoard: newBoardData?.[0] };
+			}),
 		// // task handlers
-		// createTask: () => set((state) => state),
-		// editTask: () => set((state) => state),
-		// deleteTask: () => set((state) => state),
+		createTask: () => set((state) => state),
+		editTask: () => set((state) => state),
+		deleteTask: (boardId: number, taskId: number) =>
+			set((state) => {
+				const { boardData } = state;
+				const currentBoard = boardData?.find((board) => board.id === boardId);
+				currentBoard?.columns?.forEach((column: any) => {
+					const taskIndex = column.tasks.findIndex((task: any) => task.id === taskId);
+
+					if (taskIndex !== -1) {
+						// Use slice to create a new array instead of mutating directly
+						column.tasks = [
+							...column.tasks.slice(0, taskIndex),
+							...column.tasks.slice(taskIndex + 1),
+						];
+					}
+				});
+
+				return { boardData };
+			}),
 	}));
 };
 

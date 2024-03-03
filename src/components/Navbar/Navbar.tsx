@@ -19,7 +19,7 @@ export const Navbar = () => {
 	return (
 		<div className={styles.navbar}>
 			<Truncate as="h1" lines={1} className={styles.desktop}>
-				{activeBoard.name}
+				{activeBoard?.name || 'No Board Found'}
 			</Truncate>
 			<Dropdown
 				className={styles.mobile}
@@ -27,7 +27,7 @@ export const Navbar = () => {
 				placeholder={
 					<Button variant="normal" color="white">
 						<Truncate as="h1" lines={1}>
-							{activeBoard.name}
+							{activeBoard?.name || 'No Board Found'}
 						</Truncate>
 						<ArrowIcon />
 					</Button>
@@ -36,30 +36,32 @@ export const Navbar = () => {
 			>
 				<Sidebar isMobile />
 			</Dropdown>
-			<div className={styles.settings}>
-				<Button onClick={() => openModal(ADD_TASK)}>
-					<AddIcon />
-					<span className={styles.settingsText}>Add new Task</span>
-				</Button>
-				<Dropdown position="right">
-					<Button
-						variant="normal"
-						color="secondary"
-						size="md"
-						onClick={() => openModal(EDIT_BOARD)}
-					>
-						Edit Board
+			{!!activeBoard && (
+				<div className={styles.settings}>
+					<Button onClick={() => openModal(ADD_TASK)}>
+						<AddIcon />
+						<span className={styles.settingsText}>Add new Task</span>
 					</Button>
-					<Button
-						variant="normal"
-						color="danger"
-						size="md"
-						onClick={() => openModal(DELETE_BOARD)}
-					>
-						Delete Board
-					</Button>
-				</Dropdown>
-			</div>
+					<Dropdown position="right">
+						<Button
+							variant="normal"
+							color="secondary"
+							size="md"
+							onClick={() => openModal(EDIT_BOARD)}
+						>
+							Edit Board
+						</Button>
+						<Button
+							variant="normal"
+							color="danger"
+							size="md"
+							onClick={() => openModal(DELETE_BOARD)}
+						>
+							Delete Board
+						</Button>
+					</Dropdown>
+				</div>
+			)}
 		</div>
 	);
 };

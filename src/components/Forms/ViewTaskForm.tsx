@@ -16,7 +16,7 @@ export const ViewTaskForm = ({ title, description, subTasks }: any) => {
 		<Modal>
 			<Form>
 				<Form.Group direction="row">
-					<Truncate as="h3" lines={1}>
+					<Truncate as="h3" lines={3}>
 						{title}
 					</Truncate>
 					<Dropdown position="right">

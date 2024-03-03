@@ -14,9 +14,8 @@
 }
 
 .row {
-	margin-bottom: 0;
+	margin-bottom: var(--xsm-spacing);
 	justify-content: space-between;
-	align-items: center;
 }
 
 .label {

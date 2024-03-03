@@ -10,6 +10,7 @@
 	--burnt-orange: #dd9951;
 	--button-secondary-bg: var(--pure-white);
 	--text-color: var(--pure-white);
+	--_card-description-color: rgb(130, 143, 163);
 
 	--_input-border: rgba(130, 143, 163, 0.4);
 	--_card-bg-color: rgb(43, 44, 54);
@@ -111,6 +112,6 @@ textarea {
 	font-size: 14px;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
 	accent-color: var(--enigmatic-purple);
 }

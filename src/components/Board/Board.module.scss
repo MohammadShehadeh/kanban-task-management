@@ -2,11 +2,12 @@
 
 .board {
 	display: flex;
-	position: absolute;
-	left: var(--sidebar-width);
-	min-width: calc(100% - var(--sidebar-width));
 	gap: var(--lg-spacing);
+	left: var(--sidebar-width);
+	min-height: 100%;
+	min-width: calc(100% - var(--sidebar-width));
 	padding: 0 var(--lg-spacing) var(--lg-spacing);
+	position: absolute;
 	z-index: 1;
 
 	&.isOpen {
@@ -21,6 +22,7 @@
 .task {
 	display: flex;
 	flex-direction: column;
+	scroll-snap-align: center;
 }
 
 .sticky {
@@ -53,4 +55,9 @@
 			rgba(130, 143, 163, 0)
 		);
 	}
+}
+
+.newBoard {
+	margin: auto;
+	text-align: center;
 }

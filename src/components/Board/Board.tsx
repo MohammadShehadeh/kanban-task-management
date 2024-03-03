@@ -11,8 +11,9 @@ import { Button } from '@/components/shared/Button';
 import { AddIcon } from '@/components/shared/icons';
 
 import { useSidebarStore } from '@/store/sidebarStore';
-import { EDIT_COLUMN, VIEW_TASK, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD, EDIT_COLUMN, VIEW_TASK, useModalStore } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
+import { Typography } from '@/components/shared/Typography';
 
 import styles from './Board.module.scss';
 
@@ -61,7 +62,7 @@ export const Board = () => {
 
 	return (
 		<div className={cx(styles.board, { [styles.isOpen]: !isSidebarOpen })}>
-			{activeBoard.columns?.map((column, columnIndex) => (
+			{activeBoard?.columns?.map((column, columnIndex) => (
 				<div className={styles.task} key={columnIndex}>
 					<Badge order={columnIndex + 1} className={styles.sticky}>
 						{column.name} ({column.tasks.length})
@@ -91,20 +92,32 @@ export const Board = () => {
 					</Column>
 				</div>
 			))}
-			<div className={styles.task}>
-				<Badge className={styles.sticky}>&nbsp;</Badge>
-				<Column className={styles.addNewCol}>
-					<Button
-						variant="normal"
-						size="lg"
-						color="secondary"
-						center
-						onClick={() => openModal(EDIT_COLUMN)}
-					>
-						<AddIcon /> New Column
+
+			{!!activeBoard ? (
+				<div className={styles.task}>
+					<Badge className={styles.sticky}>&nbsp;</Badge>
+					<Column className={styles.addNewCol}>
+						<Button
+							variant="normal"
+							size="lg"
+							color="secondary"
+							center
+							onClick={() => openModal(EDIT_COLUMN)}
+						>
+							<AddIcon /> New Column
+						</Button>
+					</Column>
+				</div>
+			) : (
+				<div className={styles.newBoard}>
+					<Typography as="p" color="muted">
+						This board is empty. Create a new column to get started.
+					</Typography>
+					<Button size="md" center onClick={() => openModal(ADD_BOARD)}>
+						<AddIcon /> Create New Board
 					</Button>
-				</Column>
-			</div>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -1,3 +1,5 @@
+@import '@/styles/breakpoints';
+
 .modal {
 	position: fixed;
 	inset: 0;
@@ -27,4 +29,8 @@
 	position: relative;
 	width: 100%;
 	z-index: 2;
+
+	@include respond-below('sm') {
+		padding: var(--md-spacing);
+	}
 }

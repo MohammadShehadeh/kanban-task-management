@@ -47,14 +47,14 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 				[styles.mobile]: isMobile,
 			})}
 		>
-			<Badge>All Boards (3)</Badge>
+			<Badge>All Boards ({boardData?.length || 0})</Badge>
 			<div className={styles.wrapper}>
 				<div className={styles.sideNav}>
-					{boardData.map((item, index) => (
+					{boardData?.map((item, index) => (
 						<Button
 							key={index}
 							className={cx(styles.button, {
-								[styles.active]: item.id === activeBoard.id,
+								[styles.active]: item.id === activeBoard?.id,
 							})}
 							variant="normal"
 							size="md"
