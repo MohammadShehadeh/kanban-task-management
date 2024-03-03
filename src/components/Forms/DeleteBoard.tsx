@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { Typography } from '@/components/shared/Typography';
 import { Grid } from '@/components/shared/Grid';
 import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { DELETE_BOARD, DELETE_TASK, ModalType, useModalStore } from '@/store/modalStore';
+
+import { ModalType, useModalStore } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
 
 interface DeleteFormProps {
@@ -11,22 +13,18 @@ interface DeleteFormProps {
 	type?: ModalType;
 }
 
-export const DeleteForm = ({ onDelete, type }: DeleteFormProps) => {
-	const { closeModal, modalType } = useModalStore();
-	const { activeBoard, activeTask } = useBoardDataStore();
+export const DeleteBoard = ({ onDelete }: DeleteFormProps) => {
+	const { closeModal } = useModalStore();
+	const { activeBoard } = useBoardDataStore();
 
 	return (
 		<Modal>
 			<Typography as="h3" color="danger">
-				{modalType === DELETE_BOARD && 'Delete this board?'}
-				{modalType === DELETE_TASK && 'Delete this Task?'}
+				Delete this board?
 			</Typography>
 			<Typography as="p" color="muted" size="sm">
-				{modalType === DELETE_BOARD &&
-					`Are you sure you want to delete the "${activeBoard.name}" board? This action will remove all columns and tasks and cannot be reversed.`}
-
-				{modalType === DELETE_TASK &&
-					`Are you sure you want to delete the "${activeTask.title}" task? This action will remove the task and cannot be reversed.`}
+				Are you sure you want to delete the <b>{activeBoard.name}</b> board? This action will
+				remove all columns and tasks and cannot be reversed.
 			</Typography>
 			<Grid>
 				<Grid.Col lg={6}>

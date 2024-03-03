@@ -2,7 +2,13 @@
 
 import React from 'react';
 
-import { BoardForm, DeleteForm, TaskForm, ViewTaskForm } from '@/components/Forms';
+import {
+	BoardForm,
+	DeleteBoard,
+	DeleteTask,
+	TaskForm,
+	ViewTaskForm,
+} from '@/components/Forms';
 
 import {
 	ADD_BOARD,
@@ -21,35 +27,19 @@ export const Modals = () => {
 	const { modalType } = useModalStore();
 	const { activeTask, activeBoard } = useBoardDataStore();
 
-	if (modalType === EDIT_BOARD) {
-		return <BoardForm />;
-	}
+	const modalComponents: {
+		[key: string]: React.JSX.Element;
+	} = {
+		[EDIT_BOARD]: <BoardForm {...activeBoard} type={EDIT_BOARD} />,
+		[ADD_BOARD]: <BoardForm type={ADD_BOARD} />,
+		[EDIT_COLUMN]: <BoardForm {...activeBoard} type={EDIT_BOARD} />,
+		[DELETE_BOARD]: <DeleteBoard />,
 
-	if (modalType === ADD_BOARD) {
-		return <BoardForm />;
-	}
+		[ADD_TASK]: <TaskForm type={ADD_TASK} />,
+		[EDIT_TASK]: <TaskForm {...activeTask} type={EDIT_TASK} />,
+		[DELETE_TASK]: <DeleteTask />,
+		[VIEW_TASK]: <ViewTaskForm {...activeTask} />,
+	};
 
-	if (modalType === DELETE_BOARD) {
-		return <DeleteForm />;
-	}
-
-	if (modalType === EDIT_COLUMN) {
-		return <BoardForm {...activeBoard} />;
-	}
-
-	if (modalType === ADD_TASK) {
-		return <TaskForm />;
-	}
-
-	if (modalType === EDIT_TASK) {
-		return <TaskForm />;
-	}
-
-	if (modalType === VIEW_TASK) {
-		return <ViewTaskForm {...activeTask} />;
-	}
-
-	if (modalType === DELETE_TASK) {
-		return <DeleteForm />;
-	}
+	return modalComponents[modalType] || null;
 };
