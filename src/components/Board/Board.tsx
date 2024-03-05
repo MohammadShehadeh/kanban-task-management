@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client';
 
-import React, { DragEvent } from 'react';
+import React, { DragEvent, useRef, useState } from 'react';
 import cx from 'classnames';
 
 import { Column } from '@/components/shared/Column';
@@ -20,16 +20,25 @@ import styles from './Board.module.scss';
 export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();
 	const { openModal } = useModalStore();
-	const { activeBoard, setActiveTask } = useBoardDataStore();
+	const { activeBoard, setActiveTask, moveTask } = useBoardDataStore();
+	const [activeColumnIndex, setActiveColumnIndex] = useState(-1);
 
-	const handleOnDrag = (e: DragEvent, column: any, task: any) => {
-		e.dataTransfer.setData('draggedColumn', JSON.stringify(column));
-		e.dataTransfer.setData('draggedTask', JSON.stringify(task));
+	const handleOnDrag = (e: DragEvent, columnId: number, taskId: number) => {
+		e.dataTransfer.setData('currentColumnId', columnId);
+		e.dataTransfer.setData('currentTaskId', taskId);
+
+		setActiveColumnIndex(columnId);
 	};
 
-	const handleOnDrop = (e: DragEvent, targetId: number) => {
-		const draggedColumn = JSON.parse(e.dataTransfer.getData('draggedColumn'));
-		const draggedTask = JSON.parse(e.dataTransfer.getData('draggedTask'));
+	const handleOnDrop = (e: DragEvent, targetColumnId: number) => {
+		const currentColumnId = +e.dataTransfer.getData('currentColumnId');
+		const currentTaskId = +e.dataTransfer.getData('currentTaskId');
+
+		if (targetColumnId !== currentColumnId) {
+			moveTask(targetColumnId, currentTaskId, currentColumnId);
+		}
+
+		setActiveColumnIndex(-1);
 	};
 
 	const handleDragOver = (event: DragEvent) => {
@@ -47,6 +56,7 @@ export const Board = () => {
 						data-name={column.name}
 						onDragOver={handleDragOver}
 						onDrop={(e) => handleOnDrop(e, column.id)}
+						active={activeColumnIndex >= 0 ? activeColumnIndex !== columnIndex : false}
 					>
 						{column.tasks.map((task, taskIndex) => (
 							<Card
@@ -56,7 +66,8 @@ export const Board = () => {
 									openModal(VIEW_TASK);
 									setActiveTask(column.id, task.id);
 								}}
-								onDragStart={(e) => handleOnDrag(e, column, task)}
+								onDragStart={(e) => handleOnDrag(e, column.id, task.id)}
+								onDragEnd={() => setActiveColumnIndex(-1)}
 							>
 								<Card.Headline>{task.title}</Card.Headline>
 								<Card.Description>

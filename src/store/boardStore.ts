@@ -36,6 +36,7 @@ const SingleBoardSchema = z.object({
 
 const BoardSchema = z.array(SingleBoardSchema);
 
+type Column = z.infer<typeof SingleColumnSchema>;
 type Task = z.infer<typeof SingleTaskSchema>;
 type BoardData = z.infer<typeof SingleBoardSchema>;
 
@@ -46,6 +47,7 @@ interface ZStore {
 
 	setActiveTask: (columnId: number, taskId: number) => void;
 	setActiveBoard: (id: number) => void;
+	moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) => void;
 	createBoard: () => void;
 	editBoard: () => void;
 	deleteBoard: (id: number) => void;
@@ -68,13 +70,52 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 		setActiveTask: (columnId: number, taskId: number) =>
 			set((state) => {
 				const activeColumn = state.activeBoard?.columns?.find(
-					(column: any) => column.id === columnId
+					(column: Column) => column.id === columnId
 				);
 				const activeTask = activeColumn?.tasks?.find((task: any) => task.id === taskId);
 
 				return { activeTask: activeTask };
 			}),
+		moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) =>
+			set((state) => {
+				const updatedActiveBoard = state.activeBoard;
 
+				const targetColumnIndex =
+					updatedActiveBoard?.columns.findIndex(
+						(columns: Column) => columns.id === targetColumnId
+					) ?? -1;
+
+				const currentColumnIndex =
+					updatedActiveBoard?.columns.findIndex(
+						(columns: Column) => columns.id === currentColumnId
+					) ?? -1;
+
+				const currentTaskIndex =
+					updatedActiveBoard?.columns[currentColumnIndex]?.tasks.findIndex(
+						(task: Task) => task.id === currentTaskId
+					) ?? -1;
+
+				if (!updatedActiveBoard || currentTaskIndex === -1 || currentColumnIndex === -1) {
+					return {};
+				}
+
+				// change current task id
+				const currentColumn = updatedActiveBoard.columns[currentColumnIndex];
+				const currentTask = currentColumn.tasks[currentTaskIndex];
+				currentTask.id = Date.now();
+
+				// Move current task to the target column
+				const targetColumn = updatedActiveBoard.columns[targetColumnIndex];
+				targetColumn.tasks.push(currentTask);
+
+				// Remove current task from current column
+				currentColumn.tasks = [
+					...currentColumn.tasks.slice(0, currentTaskIndex),
+					...currentColumn.tasks.slice(currentTaskIndex + 1),
+				];
+
+				return { activeBoard: updatedActiveBoard };
+			}),
 		// // board handlers
 		createBoard: () => set((state) => state),
 		editBoard: () => set((state) => state),
@@ -91,7 +132,7 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 			set((state) => {
 				const { boardData } = state;
 				const currentBoard = boardData?.find((board) => board.id === boardId);
-				currentBoard?.columns?.forEach((column: any) => {
+				currentBoard?.columns?.forEach((column: Column) => {
 					const taskIndex = column.tasks.findIndex((task: any) => task.id === taskId);
 
 					if (taskIndex !== -1) {
