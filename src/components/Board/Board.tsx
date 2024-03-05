@@ -1,7 +1,6 @@
-// @ts-nocheck
 'use client';
 
-import React, { DragEvent, useRef, useState } from 'react';
+import React, { DragEvent, useState } from 'react';
 import cx from 'classnames';
 
 import { Column } from '@/components/shared/Column';
@@ -24,8 +23,8 @@ export const Board = () => {
 	const [activeColumnIndex, setActiveColumnIndex] = useState(-1);
 
 	const handleOnDrag = (e: DragEvent, columnId: number, taskId: number) => {
-		e.dataTransfer.setData('currentColumnId', columnId);
-		e.dataTransfer.setData('currentTaskId', taskId);
+		e.dataTransfer.setData('currentColumnId', columnId.toString());
+		e.dataTransfer.setData('currentTaskId', taskId.toString());
 
 		setActiveColumnIndex(columnId);
 	};
