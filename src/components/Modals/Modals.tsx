@@ -38,7 +38,7 @@ export const Modals = () => {
 		[ADD_TASK]: <TaskForm type={ADD_TASK} />,
 		[EDIT_TASK]: <TaskForm {...activeTask} type={EDIT_TASK} />,
 		[DELETE_TASK]: <DeleteTask />,
-		[VIEW_TASK]: <ViewTaskForm {...activeTask} />,
+		[VIEW_TASK]: <ViewTaskForm {...activeTask!} />,
 	};
 
 	return modalComponents[modalType] || null;
