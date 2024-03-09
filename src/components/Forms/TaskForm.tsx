@@ -9,6 +9,7 @@ import { Textarea } from '@/components/shared/Textarea';
 import { Select } from '@/components/shared/Select';
 import { Modal } from '@/components/shared/Modal/Modal';
 import { ADD_TASK, ModalType } from '@/store/modalStore';
+import { useBoardDataStore } from '@/store/boardStore';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -35,6 +36,8 @@ export const TaskForm = ({
 	status = '',
 	type,
 }: TaskFormProps) => {
+	const { activeBoard } = useBoardDataStore();
+
 	const {
 		register,
 		handleSubmit,
@@ -167,7 +170,7 @@ export const TaskForm = ({
 						error={!!errors?.status}
 						id="status"
 						placeholder="Status"
-						options={['ready', 'done']}
+						options={activeBoard?.columns?.map((column) => column.name) ?? []}
 						name="status"
 						register={register('status', { required: "Can't be empty" })}
 					/>

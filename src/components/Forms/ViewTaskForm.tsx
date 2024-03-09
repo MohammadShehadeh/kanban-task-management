@@ -8,9 +8,12 @@ import { Dropdown } from '@/components/shared/Dropdown';
 import { Button } from '@/components/shared/Button';
 import { DELETE_TASK, EDIT_TASK, useModalStore } from '@/store/modalStore';
 import { Truncate } from '@/components/shared/Truncate';
+import { useBoardDataStore, type Task } from '@/store/boardStore';
 
-export const ViewTaskForm = ({ title, description, subTasks }: any) => {
+export const ViewTaskForm = ({ id, title, description, subTasks, status }: Task) => {
 	const { openModal } = useModalStore();
+	const { activeBoard, updateSubTask, moveTask } = useBoardDataStore();
+	const completedSubTasks = subTasks.filter((subTask) => subTask.completed).length ?? 0;
 
 	return (
 		<Modal>
@@ -40,31 +43,44 @@ export const ViewTaskForm = ({ title, description, subTasks }: any) => {
 						</Button>
 					</Dropdown>
 				</Form.Group>
-
 				<Form.Group direction="column">
 					<Typography color="muted" size="sm">
 						{description || 'No description'}
 					</Typography>
 				</Form.Group>
-
 				<Form.Group direction="column">
-					<Form.Label htmlFor={title}>Subtasks (0 of 3)</Form.Label>
-					{subTasks?.map(({ id, title }: any) => (
-						<Form.CheckboxGroup key={id}>
-							<Checkbox id={title} value={title} />
+					<Form.Label htmlFor={title}>
+						Subtasks ({completedSubTasks} of {subTasks.length ?? 0})
+					</Form.Label>
+					{subTasks?.map(({ title, completed }: any, index: number) => (
+						<Form.CheckboxGroup key={title}>
+							<Checkbox
+								checked={completed}
+								id={title}
+								value={title}
+								onChange={(e) => updateSubTask(index, e.target.checked)}
+							/>
 							<Form.Label htmlFor={title}>{title}</Form.Label>
 						</Form.CheckboxGroup>
 					))}
 				</Form.Group>
-
 				<Form.Group>
 					<Form.Label htmlFor="status">Current Status</Form.Label>
 					<Select
-						value={''}
-						setValue={() => {}}
+						value={status}
+						setValue={(columnName) => {
+							let targetColumnId = 0;
+							let currentColumnId = 0;
+							activeBoard?.columns.forEach(({ name, id }) => {
+								if (columnName === name) targetColumnId = id;
+								if (status === name) currentColumnId = id;
+							});
+
+							if (columnName !== status) moveTask(targetColumnId, id, currentColumnId);
+						}}
 						id="status"
 						placeholder="Status"
-						options={['ready', 'done']}
+						options={activeBoard?.columns.map((column) => column.name) ?? []}
 						name="status"
 					/>
 				</Form.Group>

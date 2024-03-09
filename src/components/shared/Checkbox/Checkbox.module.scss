@@ -1,0 +1,4 @@
+.checkbox:checked + label {
+    text-decoration: line-through;
+    color: var(--_card-description-color);
+}

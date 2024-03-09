@@ -14,6 +14,7 @@ const SubTaskSchema = z.array(SingleSubTaskSchema);
 const SingleTaskSchema = z.object({
 	id: z.number(),
 	title: z.string().optional(),
+	status: z.string(),
 	description: z.string().optional(),
 	subTasks: SubTaskSchema,
 });
@@ -36,9 +37,10 @@ const SingleBoardSchema = z.object({
 
 const BoardSchema = z.array(SingleBoardSchema);
 
-type Column = z.infer<typeof SingleColumnSchema>;
-type Task = z.infer<typeof SingleTaskSchema>;
-type BoardData = z.infer<typeof SingleBoardSchema>;
+export type SubTask = z.infer<typeof SingleSubTaskSchema>;
+export type Column = z.infer<typeof SingleColumnSchema>;
+export type Task = z.infer<typeof SingleTaskSchema>;
+export type BoardData = z.infer<typeof SingleBoardSchema>;
 
 interface ZStore {
 	boardData?: BoardData[];
@@ -51,9 +53,10 @@ interface ZStore {
 	createBoard: () => void;
 	editBoard: () => void;
 	deleteBoard: (id: number) => void;
-	createTask: () => void;
+	createTask: (task: Task) => void;
 	editTask: () => void;
 	deleteTask: (boardId: number, taskId: number) => void;
+	updateSubTask: (position: number, completed: boolean) => void;
 }
 
 const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
@@ -99,13 +102,15 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 					return {};
 				}
 
+				const targetColumn = updatedActiveBoard.columns[targetColumnIndex];
+
 				// change current task id
 				const currentColumn = updatedActiveBoard.columns[currentColumnIndex];
 				const currentTask = currentColumn.tasks[currentTaskIndex];
 				currentTask.id = Date.now();
+				currentTask.status = targetColumn.name;
 
 				// Move current task to the target column
-				const targetColumn = updatedActiveBoard.columns[targetColumnIndex];
 				targetColumn.tasks.push(currentTask);
 
 				// Remove current task from current column
@@ -116,7 +121,7 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 
 				return { activeBoard: updatedActiveBoard };
 			}),
-		// // board handlers
+
 		createBoard: () => set((state) => state),
 		editBoard: () => set((state) => state),
 		deleteBoard: (boardId: number) =>
@@ -125,8 +130,13 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 
 				return { boardData: newBoardData, activeBoard: newBoardData?.[0] };
 			}),
-		// // task handlers
-		createTask: () => set((state) => state),
+
+		createTask: (task) =>
+			set((state) => {
+				const currentBoardData = state.activeBoard;
+
+				return state;
+			}),
 		editTask: () => set((state) => state),
 		deleteTask: (boardId: number, taskId: number) =>
 			set((state) => {
@@ -145,6 +155,30 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 				});
 
 				return { boardData };
+			}),
+		updateSubTask: (position, completed) =>
+			set((state) => {
+				const activeTaskId = state.activeTask?.id;
+
+				let activeColumn = 0;
+				let activeTask = 0;
+
+				state.activeBoard?.columns?.forEach((column, colIndex) => {
+					column.tasks.forEach((task, taskIndex) => {
+						if (task.id === activeTaskId) {
+							activeTask = taskIndex;
+							activeColumn = colIndex;
+
+							task.subTasks.forEach((subTask, index) => {
+								if (position === index) {
+									subTask.completed = completed;
+								}
+							});
+						}
+					});
+				});
+
+				return { activeBoard: state.activeBoard };
 			}),
 	}));
 };
