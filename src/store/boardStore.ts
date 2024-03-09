@@ -50,11 +50,11 @@ interface ZStore {
 	setActiveTask: (columnId: number, taskId: number) => void;
 	setActiveBoard: (id: number) => void;
 	moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) => void;
-	createBoard: () => void;
+	createBoard: (boardData: BoardData) => void;
 	editBoard: () => void;
 	deleteBoard: (id: number) => void;
-	createTask: (task: Task) => void;
-	editTask: () => void;
+	createTask: (task: Task, targetColumnId: number) => void;
+	editTask: (task: Task) => void;
 	deleteTask: (boardId: number, taskId: number) => void;
 	updateSubTask: (position: number, completed: boolean) => void;
 }
@@ -121,8 +121,12 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 
 				return { activeBoard: updatedActiveBoard };
 			}),
+		createBoard: (data) =>
+			set((state) => {
+				state.boardData?.push(data);
 
-		createBoard: () => set((state) => state),
+				return { boardData: state.boardData };
+			}),
 		editBoard: () => set((state) => state),
 		deleteBoard: (boardId: number) =>
 			set((state) => {
@@ -130,14 +134,34 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 
 				return { boardData: newBoardData, activeBoard: newBoardData?.[0] };
 			}),
-
-		createTask: (task) =>
+		createTask: (task, targetColumnId) =>
 			set((state) => {
 				const currentBoardData = state.activeBoard;
+				currentBoardData?.columns.forEach((column) => {
+					if (column.id === targetColumnId) {
+						if (!column.tasks) {
+							column.tasks = [];
+						}
 
-				return state;
+						column.tasks.push(task);
+					}
+				});
+
+				return { activeBoard: currentBoardData };
 			}),
-		editTask: () => set((state) => state),
+		editTask: (updatedTask: Task) =>
+			set((state) => {
+				const activeTaskId = updatedTask?.id;
+				state.activeBoard?.columns?.forEach((column) => {
+					column.tasks.forEach((task, index) => {
+						if (task.id === activeTaskId) {
+							column.tasks[index] = updatedTask;
+						}
+					});
+				});
+
+				return { activeBoard: state.activeBoard };
+			}),
 		deleteTask: (boardId: number, taskId: number) =>
 			set((state) => {
 				const { boardData } = state;
@@ -159,16 +183,9 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 		updateSubTask: (position, completed) =>
 			set((state) => {
 				const activeTaskId = state.activeTask?.id;
-
-				let activeColumn = 0;
-				let activeTask = 0;
-
-				state.activeBoard?.columns?.forEach((column, colIndex) => {
-					column.tasks.forEach((task, taskIndex) => {
+				state.activeBoard?.columns?.forEach((column) => {
+					column.tasks.forEach((task) => {
 						if (task.id === activeTaskId) {
-							activeTask = taskIndex;
-							activeColumn = colIndex;
-
 							task.subTasks.forEach((subTask, index) => {
 								if (position === index) {
 									subTask.completed = completed;

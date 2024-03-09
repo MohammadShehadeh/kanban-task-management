@@ -6,24 +6,28 @@ import { AddIcon, RemoveIcon } from '@/components/shared/icons';
 import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ADD_BOARD, ModalType } from '@/store/modalStore';
+import { ADD_BOARD, ModalType, useModalStore } from '@/store/modalStore';
+import { BoardData, useBoardDataStore } from '@/store/boardStore';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
 const subTasksLimit = 5;
 
-const defaultColumns = [{ name: '' }];
+const defaultColumns = [{ name: '', id: Date.now(), tasks: [] }];
 
-interface column {
-	name: string;
-}
-interface BoardFormProps {
-	name?: string;
-	columns?: column[];
+type BoardFormProps = {
 	type?: ModalType;
-}
+} & Partial<BoardData>;
 
-export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFormProps) => {
+export const BoardForm = ({
+	name = '',
+	columns = defaultColumns,
+	type,
+	id = Date.now(),
+}: BoardFormProps) => {
+	const { createBoard } = useBoardDataStore();
+	const { closeModal } = useModalStore();
+
 	const {
 		register,
 		handleSubmit,
@@ -31,6 +35,7 @@ export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFo
 		control,
 	} = useForm({
 		defaultValues: {
+			id,
 			name,
 			columns,
 		},
@@ -41,8 +46,13 @@ export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFo
 		name: 'columns',
 	});
 
-	const formHandler = (data: any) => {
-		console.log('data: ', data);
+	const formHandler = (data: BoardData) => {
+		if (type === ADD_BOARD) {
+			data.id = Date.now();
+			createBoard(data);
+			closeModal();
+			return;
+		}
 	};
 
 	return (
@@ -121,7 +131,7 @@ export const BoardForm = ({ name = '', columns = defaultColumns, type }: BoardFo
 							size="sm"
 							center
 							color="secondary"
-							onClick={() => append({ name: '' })}
+							onClick={() => append({ name: '', id: Date.now(), tasks: [] })}
 						>
 							<AddIcon /> Add New Column
 						</Button>

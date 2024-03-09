@@ -8,8 +8,8 @@ import { Form } from '@/components/shared/Form';
 import { Textarea } from '@/components/shared/Textarea';
 import { Select } from '@/components/shared/Select';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ADD_TASK, ModalType } from '@/store/modalStore';
-import { useBoardDataStore } from '@/store/boardStore';
+import { ADD_TASK, ModalType, useModalStore } from '@/store/modalStore';
+import { useBoardDataStore, type Task } from '@/store/boardStore';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -17,17 +17,9 @@ const subTasksLimit = 5;
 
 const defaultSubTasks = [{ title: '', completed: false }];
 
-interface SubTask {
-	title: string;
-	completed: boolean;
-}
-interface TaskFormProps {
-	title?: string;
-	description?: string;
-	status?: string;
+type TaskFormProps = {
 	type?: ModalType;
-	subTasks?: SubTask[];
-}
+} & Partial<Task>;
 
 export const TaskForm = ({
 	title = '',
@@ -35,8 +27,10 @@ export const TaskForm = ({
 	subTasks = defaultSubTasks,
 	status = '',
 	type,
+	id = Date.now(),
 }: TaskFormProps) => {
-	const { activeBoard } = useBoardDataStore();
+	const { activeBoard, editTask, moveTask, createTask } = useBoardDataStore();
+	const { closeModal } = useModalStore();
 
 	const {
 		register,
@@ -47,6 +41,7 @@ export const TaskForm = ({
 		control,
 	} = useForm({
 		defaultValues: {
+			id,
 			title,
 			description,
 			subTasks,
@@ -65,8 +60,31 @@ export const TaskForm = ({
 		setValue('status', value, { shouldValidate: true });
 	};
 
-	const formHandler = (data: any) => {
-		console.log('data: ', data);
+	const formHandler = (data: Task) => {
+		const statusValue = getValues().status;
+		let targetColumnId = 0;
+		let currentColumnId = 0;
+
+		activeBoard?.columns.forEach(({ name, id }) => {
+			if (statusValue === name) targetColumnId = id;
+		});
+
+		if (type === ADD_TASK) {
+			data.id = Date.now();
+
+			createTask(data, targetColumnId);
+			closeModal();
+
+			return;
+		}
+
+		editTask(data);
+
+		if (statusValue !== status) {
+			moveTask(targetColumnId, id, currentColumnId);
+		}
+
+		closeModal();
 	};
 
 	return (

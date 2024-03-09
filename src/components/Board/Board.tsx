@@ -49,7 +49,7 @@ export const Board = () => {
 			{activeBoard?.columns?.map((column, columnIndex) => (
 				<div className={styles.task} key={columnIndex}>
 					<Badge order={columnIndex + 1} className={styles.sticky}>
-						{column.name} ({column.tasks.length})
+						{column.name} ({column.tasks?.length ?? 0})
 					</Badge>
 					<Column
 						data-name={column.name}
@@ -57,7 +57,7 @@ export const Board = () => {
 						onDrop={(e) => handleOnDrop(e, column.id)}
 						active={activeColumnIndex >= 0 ? activeColumnIndex !== columnIndex : false}
 					>
-						{column.tasks.map((task, taskIndex) => (
+						{column.tasks?.map((task, taskIndex) => (
 							<Card
 								draggable
 								key={taskIndex}
