@@ -8,6 +8,7 @@ import { Form } from '@/components/shared/Form';
 import { Modal } from '@/components/shared/Modal/Modal';
 import { ADD_BOARD, ModalType, useModalStore } from '@/store/modalStore';
 import { BoardData, useBoardDataStore } from '@/store/boardStore';
+import { firstOccurrenceIndex } from '@/utils/string';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -33,6 +34,7 @@ export const BoardForm = ({
 		handleSubmit,
 		formState: { errors },
 		control,
+		setError,
 	} = useForm({
 		defaultValues: {
 			id,
@@ -47,12 +49,22 @@ export const BoardForm = ({
 	});
 
 	const formHandler = (data: BoardData) => {
-		if (type === ADD_BOARD) {
-			data.id = Date.now();
-			createBoard(data);
-			closeModal();
+		if (type !== ADD_BOARD) {
 			return;
 		}
+
+		const occurrenceIndex = firstOccurrenceIndex(data.columns, 'name');
+		if (occurrenceIndex > -1) {
+			setError(`columns.${occurrenceIndex}.name`, {
+				type: 'validate',
+			});
+
+			return;
+		}
+
+		data.id = Date.now();
+		createBoard(data);
+		closeModal();
 	};
 
 	return (
@@ -116,6 +128,10 @@ export const BoardForm = ({
 
 										{errorType == 'required' && (
 											<Form.HelperText>{requiredMessage}</Form.HelperText>
+										)}
+
+										{errorType == 'validate' && (
+											<Form.HelperText>{validateMessage}</Form.HelperText>
 										)}
 									</Form.Group>
 								);
