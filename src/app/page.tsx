@@ -5,8 +5,6 @@ import { Sidebar } from '@/components/Sidebar';
 import { Board } from '@/components/Board';
 import { Modals } from '@/components/Modals';
 
-import '@/styles/index.scss';
-
 export default async function Home() {
 	return (
 		<Layout>

@@ -89,6 +89,7 @@ export const Board = () => {
 							color="secondary"
 							center
 							onClick={() => openModal(EDIT_COLUMN)}
+							disabled
 						>
 							<AddIcon /> New Column
 						</Button>

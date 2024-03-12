@@ -125,7 +125,7 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 			set((state) => {
 				state.boardData?.push(data);
 
-				return { boardData: state.boardData };
+				return { boardData: state.boardData, activeBoard: data };
 			}),
 		editBoard: () => set((state) => state),
 		deleteBoard: (boardId: number) =>

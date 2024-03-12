@@ -11,6 +11,11 @@
 	svg {
 		flex-shrink: 0;
 	}
+
+	&:disabled {
+		opacity: 0.2;
+		cursor: not-allowed;
+	}
 }
 
 .normal {

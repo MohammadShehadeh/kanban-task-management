@@ -4,6 +4,8 @@ import cx from 'classnames';
 
 import { plusJakartaSans } from './fonts';
 
+import '@/styles/index.scss';
+
 export const metadata: Metadata = {
 	title: 'Frontend Mentor | Kanban Task Management Web App',
 };
