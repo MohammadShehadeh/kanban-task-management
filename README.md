@@ -27,24 +27,24 @@ Users should be able to:
 - Mark subtasks as complete and move tasks between columns
 - Hide/show the board sidebar
 
-Expected Behavior: (**In Progress**)
+Expected Behavior:
 
 - Boards
   - Clicking different boards in the sidebar will change to the selected board.
   - Clicking "Create New Board" in the sidebar opens the "Add New Board" modal.
   - Clicking in the dropdown menu "Edit Board" opens up the "Edit Board" modal where details
-    can be changed.
-  - Columns are added and removed for the Add/Edit Board modals.
+    can be changed. (**In Progress**)
+  - Columns are added and removed for the Add/Edit Board modals. (**In Progress**)
   - Deleting a board deletes all columns and tasks and requires confirmation.
 - Columns
   - A board needs at least one column before tasks can be added. If no columns exist, the "Add
     New Task" button in the header is disabled.
-  - Clicking "Add New Column" opens the "Edit Board" modal where columns are added.
+  - Clicking "Add New Column" opens the "Edit Board" modal where columns are added. (**In Progress**)
 - Tasks
   - Adding a new task adds it to the bottom of the relevant column.
   - Updating a task's status will move the task to the relevant column.
 
-Bonus: (**In Progress**)
+Bonus:
 
 - The tasks can be dragged and dropped to a new column.
 
