@@ -136,6 +136,7 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 			}),
 		createBoard: (data) =>
 			set((state) => {
+				data.id = Date.now();
 				state.boardData?.push(data);
 
 				return { boardData: state.boardData, activeBoard: data };

@@ -20,13 +20,13 @@ export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();
 	const { openModal } = useModalStore();
 	const { activeBoard, setActiveTask, moveTask } = useBoardDataStore();
-	const [activeColumnIndex, setActiveColumnIndex] = useState(-1);
+	const [activeColumnId, setActiveColumnId] = useState(-1);
 
 	const handleOnDrag = (e: DragEvent, columnId: number, taskId: number) => {
 		e.dataTransfer.setData('currentColumnId', columnId.toString());
 		e.dataTransfer.setData('currentTaskId', taskId.toString());
 
-		setActiveColumnIndex(columnId);
+		setActiveColumnId(columnId);
 	};
 
 	const handleOnDrop = (e: DragEvent, targetColumnId: number) => {
@@ -37,7 +37,7 @@ export const Board = () => {
 			moveTask(targetColumnId, currentTaskId, currentColumnId);
 		}
 
-		setActiveColumnIndex(-1);
+		setActiveColumnId(-1);
 	};
 
 	const handleDragOver = (event: DragEvent) => {
@@ -47,7 +47,7 @@ export const Board = () => {
 	return (
 		<div className={cx(styles.board, { [styles.isOpen]: !isSidebarOpen })}>
 			{activeBoard?.columns?.map((column, columnIndex) => (
-				<div className={styles.task} key={columnIndex}>
+				<div className={styles.task} key={column.id}>
 					<Badge order={columnIndex + 1} className={styles.sticky}>
 						{column.name} ({column.tasks?.length ?? 0})
 					</Badge>
@@ -55,18 +55,18 @@ export const Board = () => {
 						data-name={column.name}
 						onDragOver={handleDragOver}
 						onDrop={(e) => handleOnDrop(e, column.id)}
-						active={activeColumnIndex >= 0 ? activeColumnIndex !== columnIndex : false}
+						active={activeColumnId > -1 ? column.id !== activeColumnId : false}
 					>
-						{column.tasks?.map((task, taskIndex) => (
+						{column.tasks?.map((task) => (
 							<Card
 								draggable
-								key={taskIndex}
+								key={task.id}
 								onClick={() => {
 									openModal(VIEW_TASK);
 									setActiveTask(column.id, task.id);
 								}}
 								onDragStart={(e) => handleOnDrag(e, column.id, task.id)}
-								onDragEnd={() => setActiveColumnIndex(-1)}
+								onDragEnd={() => setActiveColumnId(-1)}
 							>
 								<Card.Headline>{task.title}</Card.Headline>
 								<Card.Description>

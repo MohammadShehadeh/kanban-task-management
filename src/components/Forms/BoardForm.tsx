@@ -63,7 +63,6 @@ export const BoardForm = ({
 		}
 
 		if (type === ADD_BOARD) {
-			data.id = Date.now();
 			createBoard(data);
 		}
 
