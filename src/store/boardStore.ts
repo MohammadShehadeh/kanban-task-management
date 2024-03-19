@@ -57,6 +57,7 @@ interface ZStore {
 	editTask: (task: Task) => void;
 	deleteTask: (boardId: number, taskId: number) => void;
 	updateSubTask: (position: number, completed: boolean) => void;
+	updateBoard: (data: BoardData) => void;
 }
 
 const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
@@ -120,6 +121,18 @@ const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
 				];
 
 				return { activeBoard: updatedActiveBoard };
+			}),
+		updateBoard: (data) =>
+			set((state) => {
+				const modifiedData = state.boardData?.map((board) => {
+					if (data.id === board.id) {
+						return data;
+					}
+
+					return board;
+				});
+
+				return { boardData: modifiedData, activeBoard: data };
 			}),
 		createBoard: (data) =>
 			set((state) => {

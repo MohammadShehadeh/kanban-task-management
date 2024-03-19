@@ -48,7 +48,6 @@ export const Navbar = () => {
 							color="secondary"
 							size="md"
 							onClick={() => openModal(EDIT_BOARD)}
-							disabled
 						>
 							Edit Board
 						</Button>

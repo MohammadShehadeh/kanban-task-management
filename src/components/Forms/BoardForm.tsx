@@ -6,7 +6,7 @@ import { AddIcon, RemoveIcon } from '@/components/shared/icons';
 import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ADD_BOARD, ModalType, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD, EDIT_BOARD, ModalType, useModalStore } from '@/store/modalStore';
 import { BoardData, useBoardDataStore } from '@/store/boardStore';
 import { firstOccurrenceIndex } from '@/utils/string';
 
@@ -26,7 +26,7 @@ export const BoardForm = ({
 	type,
 	id = Date.now(),
 }: BoardFormProps) => {
-	const { createBoard } = useBoardDataStore();
+	const { createBoard, updateBoard } = useBoardDataStore();
 	const { closeModal } = useModalStore();
 
 	const {
@@ -49,10 +49,6 @@ export const BoardForm = ({
 	});
 
 	const formHandler = (data: BoardData) => {
-		if (type !== ADD_BOARD) {
-			return;
-		}
-
 		const occurrenceIndex = firstOccurrenceIndex(data.columns, 'name');
 		if (occurrenceIndex > -1) {
 			setError(`columns.${occurrenceIndex}.name`, {
@@ -62,8 +58,15 @@ export const BoardForm = ({
 			return;
 		}
 
-		data.id = Date.now();
-		createBoard(data);
+		if (type === EDIT_BOARD) {
+			updateBoard(data);
+		}
+
+		if (type === ADD_BOARD) {
+			data.id = Date.now();
+			createBoard(data);
+		}
+
 		closeModal();
 	};
 

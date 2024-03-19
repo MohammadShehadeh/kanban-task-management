@@ -20,7 +20,7 @@ Frontend Mentor challenges help you improve your coding skills by building reali
 
 Users should be able to:
 
-- View the optimal layout for the app depending on their device\'s screen size
+- View the optimal layout for the app depending on the device screen size
 - See hover states for all interactive elements on the page
 - Create, read, update, and delete boards and tasks
 - Receive form validations when trying to create/edit boards and tasks
@@ -33,20 +33,19 @@ Expected Behavior:
   - Clicking different boards in the sidebar will change to the selected board.
   - Clicking "Create New Board" in the sidebar opens the "Add New Board" modal.
   - Clicking in the dropdown menu "Edit Board" opens up the "Edit Board" modal where details
-    can be changed. (**In Progress**)
-  - Columns are added and removed for the Add/Edit Board modals. (**In Progress**)
+    can be changed.
+  - Columns are added and removed for the Add/Edit Board modals.
   - Deleting a board deletes all columns and tasks and requires confirmation.
 - Columns
   - A board needs at least one column before tasks can be added. If no columns exist, the "Add
     New Task" button in the header is disabled.
-  - Clicking "Add New Column" opens the "Edit Board" modal where columns are added. (**In Progress**)
 - Tasks
   - Adding a new task adds it to the bottom of the relevant column.
   - Updating a task's status will move the task to the relevant column.
 
 Bonus:
 
-- The tasks can be dragged and dropped to a new column.
+- The tasks can be dragged and dropped into a new column.
 
 ### Screenshot
 
