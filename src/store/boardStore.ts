@@ -1,8 +1,7 @@
 import { StoreApi } from 'zustand';
 import { UseBoundStoreWithEqualityFn, createWithEqualityFn } from 'zustand/traditional';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { z } from 'zod';
-
-import data from '../../initial-data.json';
 
 const SingleSubTaskSchema = z.object({
 	title: z.string(),
@@ -61,157 +60,174 @@ interface ZStore {
 }
 
 const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
-	return createWithEqualityFn((set) => ({
-		boardData: data,
-		activeBoard: data[0],
-		activeTask: undefined,
+	return createWithEqualityFn(
+		persist(
+			(set) => ({
+				boardData: [],
+				activeBoard: undefined,
+				activeTask: undefined,
 
-		setActiveBoard: (id: number) =>
-			set((state) => {
-				const activeBoard = state.boardData?.find((board) => board.id === id);
-				return { activeBoard };
-			}),
-		setActiveTask: (columnId: number, taskId: number) =>
-			set((state) => {
-				const activeColumn = state.activeBoard?.columns?.find(
-					(column: Column) => column.id === columnId
-				);
-				const activeTask = activeColumn?.tasks?.find((task: any) => task.id === taskId);
+				setActiveBoard: (id: number) =>
+					set((state) => {
+						const activeBoard = state.boardData?.find((board) => board.id === id);
+						return { activeBoard };
+					}),
+				setActiveTask: (columnId: number, taskId: number) =>
+					set((state) => {
+						const activeColumn = state.activeBoard?.columns?.find(
+							(column: Column) => column.id === columnId
+						);
+						const activeTask = activeColumn?.tasks?.find((task: any) => task.id === taskId);
 
-				return { activeTask: activeTask };
-			}),
-		moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) =>
-			set((state) => {
-				const updatedActiveBoard = state.activeBoard;
+						return { activeTask: activeTask };
+					}),
+				moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) =>
+					set((state) => {
+						const updatedActiveBoard = state.activeBoard;
 
-				const targetColumnIndex =
-					updatedActiveBoard?.columns.findIndex(
-						(columns: Column) => columns.id === targetColumnId
-					) ?? -1;
+						const targetColumnIndex =
+							updatedActiveBoard?.columns.findIndex(
+								(columns: Column) => columns.id === targetColumnId
+							) ?? -1;
 
-				const currentColumnIndex =
-					updatedActiveBoard?.columns.findIndex(
-						(columns: Column) => columns.id === currentColumnId
-					) ?? -1;
+						const currentColumnIndex =
+							updatedActiveBoard?.columns.findIndex(
+								(columns: Column) => columns.id === currentColumnId
+							) ?? -1;
 
-				const currentTaskIndex =
-					updatedActiveBoard?.columns[currentColumnIndex]?.tasks.findIndex(
-						(task: Task) => task.id === currentTaskId
-					) ?? -1;
+						const currentTaskIndex =
+							updatedActiveBoard?.columns[currentColumnIndex]?.tasks.findIndex(
+								(task: Task) => task.id === currentTaskId
+							) ?? -1;
 
-				if (!updatedActiveBoard || currentTaskIndex === -1 || currentColumnIndex === -1) {
-					return {};
-				}
-
-				const targetColumn = updatedActiveBoard.columns[targetColumnIndex];
-
-				// change current task id
-				const currentColumn = updatedActiveBoard.columns[currentColumnIndex];
-				const currentTask = currentColumn.tasks[currentTaskIndex];
-				currentTask.id = Date.now();
-				currentTask.status = targetColumn.name;
-
-				// Move current task to the target column
-				targetColumn.tasks.push(currentTask);
-
-				// Remove current task from current column
-				currentColumn.tasks = [
-					...currentColumn.tasks.slice(0, currentTaskIndex),
-					...currentColumn.tasks.slice(currentTaskIndex + 1),
-				];
-
-				return { activeBoard: updatedActiveBoard };
-			}),
-		updateBoard: (data) =>
-			set((state) => {
-				const modifiedData = state.boardData?.map((board) => {
-					if (data.id === board.id) {
-						return data;
-					}
-
-					return board;
-				});
-
-				return { boardData: modifiedData, activeBoard: data };
-			}),
-		createBoard: (data) =>
-			set((state) => {
-				data.id = Date.now();
-				state.boardData?.push(data);
-
-				return { boardData: state.boardData, activeBoard: data };
-			}),
-		editBoard: () => set((state) => state),
-		deleteBoard: (boardId: number) =>
-			set((state) => {
-				const newBoardData = state.boardData?.filter((board) => board.id !== boardId);
-
-				return { boardData: newBoardData, activeBoard: newBoardData?.[0] };
-			}),
-		createTask: (task, targetColumnId) =>
-			set((state) => {
-				const currentBoardData = state.activeBoard;
-				currentBoardData?.columns.forEach((column) => {
-					if (column.id === targetColumnId) {
-						if (!column.tasks) {
-							column.tasks = [];
+						if (!updatedActiveBoard || currentTaskIndex === -1 || currentColumnIndex === -1) {
+							return {};
 						}
 
-						column.tasks.push(task);
-					}
-				});
+						const targetColumn = updatedActiveBoard.columns[targetColumnIndex];
 
-				return { activeBoard: currentBoardData };
-			}),
-		editTask: (updatedTask: Task) =>
-			set((state) => {
-				const activeTaskId = updatedTask?.id;
-				state.activeBoard?.columns?.forEach((column) => {
-					column.tasks.forEach((task, index) => {
-						if (task.id === activeTaskId) {
-							column.tasks[index] = updatedTask;
-						}
-					});
-				});
+						// change current task id
+						const currentColumn = updatedActiveBoard.columns[currentColumnIndex];
+						const currentTask = currentColumn.tasks[currentTaskIndex];
+						currentTask.id = Date.now();
+						currentTask.status = targetColumn.name;
 
-				return { activeBoard: state.activeBoard };
-			}),
-		deleteTask: (boardId: number, taskId: number) =>
-			set((state) => {
-				const { boardData } = state;
-				const currentBoard = boardData?.find((board) => board.id === boardId);
-				currentBoard?.columns?.forEach((column: Column) => {
-					const taskIndex = column.tasks.findIndex((task: any) => task.id === taskId);
+						// Move current task to the target column
+						targetColumn.tasks.push(currentTask);
 
-					if (taskIndex !== -1) {
-						// Use slice to create a new array instead of mutating directly
-						column.tasks = [
-							...column.tasks.slice(0, taskIndex),
-							...column.tasks.slice(taskIndex + 1),
+						// Remove current task from current column
+						currentColumn.tasks = [
+							...currentColumn.tasks.slice(0, currentTaskIndex),
+							...currentColumn.tasks.slice(currentTaskIndex + 1),
 						];
-					}
-				});
 
-				return { boardData };
-			}),
-		updateSubTask: (position, completed) =>
-			set((state) => {
-				const activeTaskId = state.activeTask?.id;
-				state.activeBoard?.columns?.forEach((column) => {
-					column.tasks.forEach((task) => {
-						if (task.id === activeTaskId) {
-							task.subTasks.forEach((subTask, index) => {
-								if (position === index) {
-									subTask.completed = completed;
+						return { activeBoard: updatedActiveBoard };
+					}),
+				updateBoard: (data) =>
+					set((state) => {
+						const modifiedData = state.boardData?.map((board) => {
+							if (data.id === board.id) {
+								return data;
+							}
+
+							return board;
+						});
+
+						return { boardData: modifiedData, activeBoard: data };
+					}),
+				createBoard: (data) =>
+					set((state) => {
+						data.id = Date.now();
+						state.boardData?.push(data);
+
+						return { boardData: state.boardData, activeBoard: data };
+					}),
+				editBoard: () => set((state) => state),
+				deleteBoard: (boardId: number) =>
+					set((state) => {
+						const newBoardData = state.boardData?.filter((board) => board.id !== boardId);
+
+						return { boardData: newBoardData, activeBoard: newBoardData?.[0] };
+					}),
+				createTask: (task, targetColumnId) =>
+					set((state) => {
+						const currentBoardData = state.activeBoard;
+						currentBoardData?.columns.forEach((column) => {
+							if (column.id === targetColumnId) {
+								if (!column.tasks) {
+									column.tasks = [];
+								}
+
+								column.tasks.push(task);
+							}
+						});
+
+						const data = state.boardData?.map((item) => {
+							if (currentBoardData && item.id === currentBoardData.id) {
+								return currentBoardData;
+							}
+
+							return item;
+						});
+
+						return { activeBoard: currentBoardData, boardData: data };
+					}),
+				editTask: (updatedTask: Task) =>
+					set((state) => {
+						const activeTaskId = updatedTask?.id;
+						state.activeBoard?.columns?.forEach((column) => {
+							column.tasks.forEach((task, index) => {
+								if (task.id === activeTaskId) {
+									column.tasks[index] = updatedTask;
 								}
 							});
-						}
-					});
-				});
+						});
 
-				return { activeBoard: state.activeBoard };
+						return { activeBoard: state.activeBoard };
+					}),
+				deleteTask: (boardId: number, taskId: number) =>
+					set((state) => {
+						const { boardData } = state;
+						const currentBoard = boardData?.find((board) => board.id === boardId);
+
+						currentBoard?.columns?.forEach((column: Column) => {
+							const taskIndex = column.tasks.findIndex((task: any) => task.id === taskId);
+
+							if (taskIndex !== -1) {
+								// Use slice to create a new array instead of mutating directly
+								column.tasks = [
+									...column.tasks.slice(0, taskIndex),
+									...column.tasks.slice(taskIndex + 1),
+								];
+							}
+						});
+
+						return { boardData };
+					}),
+				updateSubTask: (position, completed) =>
+					set((state) => {
+						const activeTaskId = state.activeTask?.id;
+						state.activeBoard?.columns?.forEach((column) => {
+							column.tasks.forEach((task) => {
+								if (task.id === activeTaskId) {
+									task.subTasks.forEach((subTask, index) => {
+										if (position === index) {
+											subTask.completed = completed;
+										}
+									});
+								}
+							});
+						});
+
+						return { activeBoard: state.activeBoard };
+					}),
 			}),
-	}));
+			{
+				name: '__msh_board', // name of the item in the storage (must be unique)
+				storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+			}
+		)
+	);
 };
 
 export const useBoardDataStore = createBoardStore();
