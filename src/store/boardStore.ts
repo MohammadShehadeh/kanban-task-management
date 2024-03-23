@@ -41,11 +41,13 @@ export type Column = z.infer<typeof SingleColumnSchema>;
 export type Task = z.infer<typeof SingleTaskSchema>;
 export type BoardData = z.infer<typeof SingleBoardSchema>;
 
-interface ZStore {
+interface BoardProps {
 	boardData?: BoardData[];
 	activeTask?: Task;
 	activeBoard?: BoardData;
+}
 
+interface BoardStore extends BoardProps {
 	setActiveTask: (columnId: number, taskId: number) => void;
 	setActiveBoard: (id: number) => void;
 	moveTask: (targetColumnId: number, currentTaskId: number, currentColumnId: number) => void;
@@ -59,14 +61,19 @@ interface ZStore {
 	updateBoard: (data: BoardData) => void;
 }
 
-const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<ZStore>> => {
+const createBoardStore = (): UseBoundStoreWithEqualityFn<StoreApi<BoardStore>> => {
+	const DEFAULT_PROPS: BoardProps = {
+		boardData: [],
+		activeBoard: undefined,
+		activeTask: undefined,
+	};
+
+	// TODO: Refactor Zustand store to follow the best practices 🧹🧹🧹🧹
+	// https://docs.pmnd.rs/zustand/getting-started/introduction
 	return createWithEqualityFn(
 		persist(
 			(set) => ({
-				boardData: [],
-				activeBoard: undefined,
-				activeTask: undefined,
-
+				...DEFAULT_PROPS,
 				setActiveBoard: (id: number) =>
 					set((state) => {
 						const activeBoard = state.boardData?.find((board) => board.id === id);

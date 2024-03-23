@@ -17,6 +17,22 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head>
+				<script
+					id="user-settings"
+					dangerouslySetInnerHTML={{
+						__html: `
+							try {
+								if (localStorage.__msh_theme === 'light') {
+									document.documentElement.dataset.colorScheme = 'light'
+								} else {
+									document.documentElement.dataset.colorScheme = 'dark'
+								}
+							} catch (_) {}
+						`,
+					}}
+				/>
+			</head>
 			<body className={cx(plusJakartaSans.variable)}>{children}</body>
 		</html>
 	);

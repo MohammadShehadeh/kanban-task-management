@@ -56,11 +56,11 @@ export const ViewTaskForm = ({ id, title, description, subTasks, status }: Task)
 						<Form.CheckboxGroup key={title}>
 							<Checkbox
 								checked={completed}
-								id={title}
+								id={`${title}-${index}`}
 								value={title}
 								onChange={(e) => updateSubTask(index, e.target.checked)}
 							/>
-							<Form.Label htmlFor={title}>{title}</Form.Label>
+							<Form.Label htmlFor={`${title}-${index}`}>{title}</Form.Label>
 						</Form.CheckboxGroup>
 					))}
 				</Form.Group>
