@@ -3,11 +3,12 @@ import { Typography } from '@/components/shared/Typography';
 import { Grid } from '@/components/shared/Grid';
 import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ModalType, useModalStore } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
+import { useAppDispatch } from '@/hooks';
+import { close } from '@/features/modal/modalSlice';
 
 export const DeleteTask = () => {
-	const { closeModal } = useModalStore();
+	const dispatch = useAppDispatch();
 	const { activeTask, activeBoard, deleteTask } = useBoardDataStore();
 
 	return (
@@ -31,14 +32,20 @@ export const DeleteTask = () => {
 								deleteTask(activeBoard.id, activeTask.id);
 							}
 
-							closeModal();
+							dispatch(close());
 						}}
 					>
 						Delete
 					</Button>
 				</Grid.Col>
 				<Grid.Col lg={6}>
-					<Button color="secondary" size="sm" center fullWidth onClick={() => closeModal()}>
+					<Button
+						color="secondary"
+						size="sm"
+						center
+						fullWidth
+						onClick={() => dispatch(close())}
+					>
 						Cancel
 					</Button>
 				</Grid.Col>

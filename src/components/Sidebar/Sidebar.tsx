@@ -9,21 +9,23 @@ import { BoardIcon, HideIcon, ShowIcon } from '@/components/shared/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 
 import { Truncate } from '@/components/shared/Truncate';
-import { useSidebarStore } from '@/store/sidebarStore';
 
-import { ADD_BOARD, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD } from '@/store/modalStore';
 
 import styles from './Sidebar.module.scss';
 import { useBoardDataStore } from '@/store/boardStore';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { selectIsSidebarOpen, toggleSideBar } from '@/features/sidebar/sidebarSlice';
+import { open } from '@/features/modal/modalSlice';
 
 interface SidebarProps {
 	isMobile?: boolean;
 }
 
 export const Sidebar = ({ isMobile }: SidebarProps) => {
-	const { toggleSideBar, isSidebarOpen } = useSidebarStore();
 	const { setActiveBoard, activeBoard, boardData } = useBoardDataStore();
-	const { openModal } = useModalStore();
+	const isSidebarOpen = useAppSelector(selectIsSidebarOpen);
+	const dispatch = useAppDispatch();
 
 	if (!isSidebarOpen && !isMobile) {
 		return (
@@ -33,7 +35,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 				size="md"
 				color="default"
 				weight="bold"
-				onClick={() => toggleSideBar()}
+				onClick={() => dispatch(toggleSideBar())}
 				aria-label="Show Sidebar"
 			>
 				<ShowIcon />
@@ -73,7 +75,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 						size="md"
 						color="primary"
 						weight="bold"
-						onClick={() => openModal(ADD_BOARD)}
+						onClick={() => dispatch(open({ type: ADD_BOARD }))}
 					>
 						<BoardIcon />
 						<Truncate lines={1}>+ Create New Board</Truncate>
@@ -88,7 +90,7 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 							size="md"
 							color="tertiary"
 							weight="bold"
-							onClick={() => toggleSideBar()}
+							onClick={() => dispatch(toggleSideBar())}
 						>
 							<HideIcon />
 							Hide Sidebar

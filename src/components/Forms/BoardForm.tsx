@@ -6,9 +6,11 @@ import { AddIcon, RemoveIcon } from '@/components/shared/icons';
 import { Input } from '@/components/shared/Input';
 import { Form } from '@/components/shared/Form';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ADD_BOARD, EDIT_BOARD, ModalType, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD, EDIT_BOARD, ModalType } from '@/store/modalStore';
 import { BoardData, useBoardDataStore } from '@/store/boardStore';
 import { firstOccurrenceIndex } from '@/utils/string';
+import { useAppDispatch } from '@/hooks';
+import { close } from '@/features/modal/modalSlice';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -27,8 +29,7 @@ export const BoardForm = ({
 	id = Date.now(),
 }: BoardFormProps) => {
 	const { createBoard, updateBoard } = useBoardDataStore();
-	const { closeModal } = useModalStore();
-
+	const dispatch = useAppDispatch();
 	const {
 		register,
 		handleSubmit,
@@ -66,7 +67,7 @@ export const BoardForm = ({
 			createBoard(data);
 		}
 
-		closeModal();
+		dispatch(close());
 	};
 
 	return (

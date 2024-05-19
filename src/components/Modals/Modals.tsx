@@ -19,13 +19,14 @@ import {
 	EDIT_COLUMN,
 	EDIT_TASK,
 	VIEW_TASK,
-	useModalStore,
 } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
+import { selectModal } from '@/features/modal/modalSlice';
+import { useAppSelector } from '@/hooks';
 
 export const Modals = () => {
-	const { modalType } = useModalStore();
 	const { activeTask, activeBoard } = useBoardDataStore();
+	const { modalType } = useAppSelector(selectModal);
 
 	const modalComponents: {
 		[key: string]: React.JSX.Element;

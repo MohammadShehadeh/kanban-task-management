@@ -8,6 +8,8 @@ import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
 import { Board } from '@/components/Board';
 import { Modals } from '@/components/Modals';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 export default function Home() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -19,16 +21,18 @@ export default function Home() {
 	if (isLoading) return null;
 
 	return (
-		<Layout>
-			<Layout.Header>
-				<Logo />
-				<Navbar />
-			</Layout.Header>
-			<Layout.Main>
-				<Sidebar />
-				<Board />
-				<Modals />
-			</Layout.Main>
-		</Layout>
+		<Provider store={store}>
+			<Layout>
+				<Layout.Header>
+					<Logo />
+					<Navbar />
+				</Layout.Header>
+				<Layout.Main>
+					<Sidebar />
+					<Board />
+					<Modals />
+				</Layout.Main>
+			</Layout>
+		</Provider>
 	);
 }

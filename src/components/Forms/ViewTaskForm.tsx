@@ -6,12 +6,14 @@ import { Form } from '@/components/shared/Form';
 import { Select } from '@/components/shared/Select';
 import { Dropdown } from '@/components/shared/Dropdown';
 import { Button } from '@/components/shared/Button';
-import { DELETE_TASK, EDIT_TASK, useModalStore } from '@/store/modalStore';
+import { DELETE_TASK, EDIT_TASK } from '@/store/modalStore';
 import { Truncate } from '@/components/shared/Truncate';
 import { useBoardDataStore, type Task } from '@/store/boardStore';
+import { useAppDispatch } from '@/hooks';
+import { open } from '@/features/modal/modalSlice';
 
 export const ViewTaskForm = ({ id, title, description, subTasks, status }: Task) => {
-	const { openModal } = useModalStore();
+	const dispatch = useAppDispatch();
 	const { activeBoard, updateSubTask, moveTask } = useBoardDataStore();
 	const completedSubTasks = subTasks.filter((subTask) => subTask.completed).length ?? 0;
 
@@ -28,7 +30,7 @@ export const ViewTaskForm = ({ id, title, description, subTasks, status }: Task)
 							color="secondary"
 							size="md"
 							type="button"
-							onClick={() => openModal(EDIT_TASK)}
+							onClick={() => dispatch(open({ type: EDIT_TASK }))}
 						>
 							Edit Task
 						</Button>
@@ -37,7 +39,7 @@ export const ViewTaskForm = ({ id, title, description, subTasks, status }: Task)
 							color="danger"
 							size="md"
 							type="button"
-							onClick={() => openModal(DELETE_TASK)}
+							onClick={() => dispatch(open({ type: DELETE_TASK }))}
 						>
 							Delete Task
 						</Button>

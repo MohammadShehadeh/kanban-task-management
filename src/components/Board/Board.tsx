@@ -10,17 +10,19 @@ import { Button } from '@/components/shared/Button';
 import { AddIcon } from '@/components/shared/icons';
 
 import { useSidebarStore } from '@/store/sidebarStore';
-import { ADD_BOARD, EDIT_COLUMN, VIEW_TASK, useModalStore } from '@/store/modalStore';
+import { ADD_BOARD, EDIT_COLUMN, VIEW_TASK } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
 import { Typography } from '@/components/shared/Typography';
 
 import styles from './Board.module.scss';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { open } from '@/features/modal/modalSlice';
 
 export const Board = () => {
 	const { isSidebarOpen } = useSidebarStore();
-	const { openModal } = useModalStore();
 	const { activeBoard, setActiveTask, moveTask } = useBoardDataStore();
 	const [activeColumnId, setActiveColumnId] = useState(-1);
+	const dispatch = useAppDispatch();
 
 	const handleOnDrag = (e: DragEvent, columnId: number, taskId: number) => {
 		e.dataTransfer.setData('currentColumnId', columnId.toString());
@@ -62,7 +64,7 @@ export const Board = () => {
 								draggable
 								key={task.id}
 								onClick={() => {
-									openModal(VIEW_TASK);
+									dispatch(open({ type: VIEW_TASK }));
 									setActiveTask(column.id, task.id);
 								}}
 								onDragStart={(e) => handleOnDrag(e, column.id, task.id)}
@@ -88,7 +90,7 @@ export const Board = () => {
 							size="lg"
 							color="secondary"
 							center
-							onClick={() => openModal(EDIT_COLUMN)}
+							onClick={() => dispatch(open({ type: EDIT_COLUMN }))}
 						>
 							<AddIcon /> New Column
 						</Button>
@@ -99,7 +101,7 @@ export const Board = () => {
 					<Typography as="p" color="muted">
 						This board is empty. Create a new column to get started.
 					</Typography>
-					<Button size="md" center onClick={() => openModal(ADD_BOARD)}>
+					<Button size="md" center onClick={() => dispatch(open({ type: ADD_BOARD }))}>
 						<AddIcon /> Create New Board
 					</Button>
 				</div>

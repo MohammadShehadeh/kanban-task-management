@@ -5,11 +5,12 @@ import { Grid } from '@/components/shared/Grid';
 import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal/Modal';
 
-import { useModalStore } from '@/store/modalStore';
 import { useBoardDataStore } from '@/store/boardStore';
+import { useAppDispatch } from '@/hooks';
+import { close } from '@/features/modal/modalSlice';
 
 export const DeleteBoard = () => {
-	const { closeModal } = useModalStore();
+	const dispatch = useAppDispatch();
 	const { activeBoard, deleteBoard } = useBoardDataStore();
 
 	return (
@@ -33,14 +34,14 @@ export const DeleteBoard = () => {
 								deleteBoard(activeBoard.id);
 							}
 
-							closeModal();
+							dispatch(close());
 						}}
 					>
 						Delete
 					</Button>
 				</Grid.Col>
 				<Grid.Col lg={6}>
-					<Button color="secondary" size="sm" center fullWidth onClick={() => closeModal()}>
+					<Button color="secondary" size="sm" center fullWidth onClick={() => dispatch(close())}>
 						Cancel
 					</Button>
 				</Grid.Col>

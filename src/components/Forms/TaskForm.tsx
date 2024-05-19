@@ -8,8 +8,10 @@ import { Form } from '@/components/shared/Form';
 import { Textarea } from '@/components/shared/Textarea';
 import { Select } from '@/components/shared/Select';
 import { Modal } from '@/components/shared/Modal/Modal';
-import { ADD_TASK, ModalType, useModalStore } from '@/store/modalStore';
+import { ADD_TASK, ModalType } from '@/store/modalStore';
 import { useBoardDataStore, type Task } from '@/store/boardStore';
+import { useAppDispatch } from '@/hooks';
+import { close } from '@/features/modal/modalSlice';
 
 const requiredMessage = "Can't be empty";
 const validateMessage = 'Already used';
@@ -30,8 +32,7 @@ export const TaskForm = ({
 	id = Date.now(),
 }: TaskFormProps) => {
 	const { activeBoard, editTask, moveTask, createTask } = useBoardDataStore();
-	const { closeModal } = useModalStore();
-
+	const dispatch = useAppDispatch();
 	const {
 		register,
 		handleSubmit,
@@ -73,7 +74,7 @@ export const TaskForm = ({
 			data.id = Date.now();
 
 			createTask(data, targetColumnId);
-			closeModal();
+			dispatch(close());
 
 			return;
 		}
@@ -84,7 +85,7 @@ export const TaskForm = ({
 			moveTask(targetColumnId, id, currentColumnId);
 		}
 
-		closeModal();
+		dispatch(close());
 	};
 
 	return (
