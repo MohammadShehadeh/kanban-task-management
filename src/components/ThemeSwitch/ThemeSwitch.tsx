@@ -11,11 +11,6 @@ import styles from './ThemeSwitch.module.scss';
 export const ThemeSwitch = () => {
 	const { toggleTheme, theme } = useThemeStore();
 
-	useLayoutEffect(() => {
-		const root = document.documentElement;
-		root.dataset.colorScheme = theme;
-	}, [theme]);
-
 	return (
 		<div className={styles.themeSwitch}>
 			<DarkIcon />

@@ -15,6 +15,7 @@ import { ADD_BOARD, useModalStore } from '@/store/modalStore';
 
 import styles from './Sidebar.module.scss';
 import { useBoardDataStore } from '@/store/boardStore';
+import { useTheme } from '@/hooks/useTheme';
 
 interface SidebarProps {
 	isMobile?: boolean;
@@ -24,6 +25,8 @@ export const Sidebar = ({ isMobile }: SidebarProps) => {
 	const { toggleSideBar, isSidebarOpen } = useSidebarStore();
 	const { setActiveBoard, activeBoard, boardData } = useBoardDataStore();
 	const { openModal } = useModalStore();
+
+	useTheme();
 
 	if (!isSidebarOpen && !isMobile) {
 		return (
