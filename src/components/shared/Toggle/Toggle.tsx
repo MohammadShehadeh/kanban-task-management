@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ButtonHTMLAttributes, useState } from 'react';
+import React, { ButtonHTMLAttributes, useLayoutEffect, useState } from 'react';
 import cx from 'classnames';
 
 import styles from './Toggle.module.scss';
@@ -8,10 +8,11 @@ import { useToggle } from '@/hooks/useToggle';
 
 interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	onClick?: () => void;
+	active?: boolean;
 }
 
-export const Toggle = ({ onClick, className, ...restProps }: ToggleProps) => {
-	const { isOpen, toggleIsOpen } = useToggle();
+export const Toggle = ({ onClick, className, active, ...restProps }: ToggleProps) => {
+	const { isOpen, toggleIsOpen } = useToggle(active);
 
 	const clickHandler = () => {
 		toggleIsOpen();

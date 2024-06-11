@@ -1,25 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import { DarkIcon, LightIcon } from '@/components/shared/icons';
 import { Toggle } from '@/components/shared/Toggle';
-import { setLocalStorageItem } from '@/utils/locale-storage';
+import { useThemeStore } from '@/store/ThemeStore';
 
 import styles from './ThemeSwitch.module.scss';
 
 export const ThemeSwitch = () => {
-	const toggleTheme = () => {
-		const htmlElement = document.documentElement;
-		const themeClassName = htmlElement.dataset.colorScheme === 'light' ? 'dark' : 'light';
-		htmlElement.dataset.colorScheme = themeClassName;
-		setLocalStorageItem('__msh_theme', themeClassName);
-	};
+	const { toggleTheme, theme } = useThemeStore();
+
+	useLayoutEffect(() => {
+		const root = document.documentElement;
+		root.dataset.colorScheme = theme;
+	}, [theme]);
 
 	return (
 		<div className={styles.themeSwitch}>
 			<DarkIcon />
-			<Toggle onClick={toggleTheme} />
+			<Toggle onClick={toggleTheme} active={theme === 'light'} />
 			<LightIcon />
 		</div>
 	);
