@@ -34,7 +34,13 @@ export const Board = () => {
 		const currentTaskId = +e.dataTransfer.getData('currentTaskId');
 
 		if (targetColumnId !== currentColumnId) {
-			moveTask(targetColumnId, currentTaskId, currentColumnId);
+			if (document.startViewTransition) {
+				document.startViewTransition(() =>
+					moveTask(targetColumnId, currentTaskId, currentColumnId)
+				);
+			} else {
+				moveTask(targetColumnId, currentTaskId, currentColumnId);
+			}
 		}
 
 		setActiveColumnId(-1);
